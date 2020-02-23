@@ -1,26 +1,30 @@
 from argparse import ArgumentParser, Namespace
+from pathlib import Path
 from typing import Callable, Dict
 
 from ekrhizoc.cli.base_command import BaseCommand
 from ekrhizoc.cli.commands import commands
+from ekrhizoc.logging import logger, setup_logger
 
 
 def main() -> None:
-    """
-    Entry point to CLI
-    Register all available CLI command modules as subcommands
-    to `ekrhizoc` command.
-    
+    """Entry point to CLI.
+    Setup logger,
+    Register `ekrhizoc` command along with
+    all the available CLI command modules as subcommands.
     """
     instantiated_commands = [C() for C in commands]
-    subcommands_map = {
-        get_command_name(command): command for command in instantiated_commands
-    }
+    subcommands_map = {command.name: command for command in instantiated_commands}
 
     parser = configure_parser(subcommands_map)
+    args = parser.parse_args()
+
+    setup_logger(args.verbosity, Path("./"))
+    # TODO: Add directory to settings file
+    directory = Path("bin/")
+    directory.mkdir(parents=True, exist_ok=True)
 
     # Show help message if no subcommand is given
-    args = parser.parse_args()
     if not getattr(args, "subcommand", False):
         return parser.print_help()
 
@@ -31,6 +35,7 @@ def main() -> None:
 
 
 def run(command: BaseCommand, args: Namespace) -> Callable:
+    logger.debug(f"Run CLI command {command.name}")
     self_cleaning_class = getattr(command, "self_cleaning", False)
     try:
         if self_cleaning_class:
@@ -38,26 +43,38 @@ def run(command: BaseCommand, args: Namespace) -> Callable:
                 return com.run(args)
         return command.run(args)
     except SystemError as e:
-        print(e)
-
-
-def get_command_name(subcommand: BaseCommand) -> str:
-    """
-    Return a name for the command.
-    Use object name value otherwise module name.
-    """
-    if "".__eq__(subcommand.name):
-        return subcommand.__module__.split(".")[-1].replace("_", "-")
-
-    return subcommand.name
+        logger.critical(e)
 
 
 def configure_parser(subcommands_map: Dict[str, BaseCommand]) -> ArgumentParser:
-    """
-    Add all subcommands to our CLI parser.
+    """Set up argument parser along with subcommands.
+
+    Args:
+        subcommands_map: A dict mapping of instantiated command names to their
+            corresponding python objects.
+
+    Returns:
+        The configured ArgumentParser object.
     """
     parser = ArgumentParser(
         prog="ekrhizoc", description="Command parser for ekrhizoc module"
+    )
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="count",
+        dest="verbosity",
+        default=0,
+        help="verbose output (repeat for increased verbosity)",
+    )
+    parser.add_argument(
+        "-q",
+        "--quiet",
+        action="store_const",
+        const=-1,
+        default=0,
+        dest="verbosity",
+        help="quiet output (show errors only)",
     )
     subparsers = parser.add_subparsers(dest="subcommand")
 

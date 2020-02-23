@@ -31,19 +31,6 @@ if [ -z "${PYTHON_FILES[@]}"  ]; then
   exit 0
 fi
 
-# echo 'regenerating documentation'
-
-# python -m documentation.generate
-
-
-# CHANGED_DOCUMENTATION_FILES=$(git diff HEAD --name-only documentation/*[^\.py$])
-# UNSTAGED_DOCUMENTATION_FILES=$(git diff --name-only -- ${CHANGED_DOCUMENTATION_FILES})
-# if [ -n "${UNSTAGED_DOCUMENTATION_FILES}"  ]; then
-#       echo 'Some documentation regenerated:' "${UNSTAGED_DOCUMENTATION_FILES[@]}"
-#       echo 'Review these files and commit them to procede'
-#       exit 1
-# fi
-
 # If anything goes wrong exit with status 1 so git won't commit
 # Put this after line above in case grep can't find any files (it exits with 1 if it can't)
 trap "echo 'Something went wrong with Black hook, commit failed.'; exit 1" ERR

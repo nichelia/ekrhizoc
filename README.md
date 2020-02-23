@@ -4,7 +4,7 @@ ekrhizoc (e6c): A web crawler
 ## Contents
 1. [Definition](#definition)
 2. [Use Case](#use-case)
-3. [Development](#development)
+3. [Development](#deve∏lopment)
 4. [Testing](#testing)
 5. [Versioning](#versioning)
 6. [Documentation](#documentation)
@@ -32,7 +32,22 @@ Output: simple textual sitemap (to show links between pages).
 
 ### Assumptions
 
-N/A
+* The input URL (seed) is limited to __only__ one at every run.
+* The targeted URL(s) are not dynamically generated (no backend javascript parsing required).
+* Links to be extracted from HTML anchor <a> elements.
+* Valid links include
+    - Valid URL
+        + Non empty
+        + Valid url address
+        + No longer than `URL_MAX_LENGTH` characters
+    - Link not visited before
+    - Link not part of ignored file types
+    - Link same domain as seed url
+    - Link not restricted in robots.txt
+
+### Design
+
+This project implements a Basic Universal Crawler based on breadth first search graph traversal.
 
 ## Development
 
@@ -52,7 +67,7 @@ N/A
 On a terminal, run the following (execute on project's root directory):
 
 * Activate project environment:  
-`make env` or `. ./scripts/helpers/environment.sh`
+`. ./scripts/helpers/environment.sh`
 * Run the CLI using `poetry`:  
 `poetry run ekrhizoc`
 
