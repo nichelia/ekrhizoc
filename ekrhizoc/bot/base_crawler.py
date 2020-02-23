@@ -9,6 +9,7 @@ class BaseCrawler:
         self._name = ""
         self._seeds = []
         self._domains = []
+        # TODO: Add to settings
         self._ignore_filetypes = {
             ".pdf",
         }

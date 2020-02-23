@@ -44,3 +44,5 @@ build-docker:
 .PHONY : clean
 clean :
 	./scripts/helpers/conda-remove-env.sh
+	rm -rf bin dist *.egg-info *.log
+	find . -path "*/__pycache__" -type d -exec rm -r {} ';'

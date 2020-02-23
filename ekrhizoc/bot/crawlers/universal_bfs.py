@@ -75,12 +75,11 @@ class UniversalBfsCrawler(BaseCrawler):
         """Asynchronous implementation.
 
         Rules:
+            * URL is valid: check url pattern, length, fix relative urls
             * URL is never visited before
             * URL is not an ingored file type.
             * URL is of the same domain as the seed.
             * URL is not restricted by robots.txt file.
-        # Validate url: Check pattern, length, fix relative urls
-        # TODO: Respect the robots.txt
         """
         if not url:
             logger.debug("Invalid url: skipping...")
@@ -97,6 +96,10 @@ class UniversalBfsCrawler(BaseCrawler):
 
         if domain and not url_utils.is_same_subdomain(url, domain):
             logger.debug(f"Different domain: skipping url {url}")
+            return False
+
+        if domain and url_utils.is_robots_restricted(url, domain):
+            logger.debug(f"Restricted by robots.txt: skipping url {url}")
             return False
 
         return True

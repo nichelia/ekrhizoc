@@ -1,7 +1,9 @@
 import re
+from functools import lru_cache
 from typing import Set
 
 import urlcanon
+from reppy.robots import Robots
 
 from ekrhizoc.logging import logger
 
@@ -37,6 +39,13 @@ def _is_valid_url(url: str = "") -> bool:
     return True
 
 
+@lru_cache(maxsize=32)
+def _get_robots_file_parser(domain: str = "") -> Robots:
+    domain_full_url = get_full_url(domain)
+    robots = Robots.fetch(domain_full_url + "/robots.txt")
+    return robots
+
+
 def get_url_domain(url: str = "") -> str:
     """
     Return the host of the given url
@@ -47,6 +56,16 @@ def get_url_domain(url: str = "") -> str:
     except Exception as e:
         logger.error(e)
         return ""
+
+
+def is_robots_restricted(url: str = "", domain: str = "") -> bool:
+    """
+    """
+    if url == "" or domain == "":
+        return True
+
+    parser = _get_robots_file_parser(domain)
+    return not parser.allowed(url, "my-user-agent")
 
 
 def is_same_subdomain(url: str = "", domain: str = "") -> bool:
@@ -65,7 +84,7 @@ def is_same_subdomain(url: str = "", domain: str = "") -> bool:
         return False
 
 
-def get_full_url(url: str = "", domain: str = "", ignore_filetypes: Set = {}) -> str:
+def get_full_url(url: str = "", domain: str = "") -> str:
     """
     """
     if _is_valid_url(url):
