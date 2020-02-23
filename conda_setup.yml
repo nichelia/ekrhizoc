@@ -1,0 +1,9 @@
+name: ekrhizoc
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python>=3.7                 # PSF
+  - pip==18.1                   # MIT
+  - poetry==1.0                 # MIT
+  - conda-pack                  # BSD
