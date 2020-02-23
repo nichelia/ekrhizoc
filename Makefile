@@ -26,6 +26,20 @@ git-hooks:
 	mkdir -p .git/hooks
 	cd .git/hooks && ln -sf ../../githooks/* .
 
+### PIP ###
+.PHONY: build-package
+build-package:
+	poetry build
+
+.PHONY: publish-package
+publish-package:
+	poetry publish
+
+### Docker ###
+.PHONY: build-docker
+build-docker:
+	./scripts/build_docker_image.sh
+
 ### Util ###
 .PHONY : clean
 clean :

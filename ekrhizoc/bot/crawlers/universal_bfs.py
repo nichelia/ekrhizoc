@@ -165,11 +165,11 @@ class UniversalBfsCrawler(BaseCrawler):
         future = asyncio.ensure_future(self._crawl())
         loop.run_until_complete(future)
         loop.close()
-        logger.info(f"URL pages fetched: {len(self.visited_urls)}")
-        logger.debug(f"Fetched urls: {list(self.visited_urls)}")
         logger.debug(
             f"Unfetched (queued) urls ({len(self.to_visit_urls.queue)}): {list(self.to_visit_urls.queue)}"
         )
+        logger.debug(f"Fetched urls: {list(self.visited_urls)}")
+        logger.info(f"URL pages fetched: {len(self.visited_urls)}")
 
     def write_output(self):
         filepath = Path("bin/") / (self.output + ".yaml")

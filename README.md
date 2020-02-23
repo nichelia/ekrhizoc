@@ -9,6 +9,7 @@ ekrhizoc (e6c): A web crawler
 5. [Versioning](#versioning)
 6. [Documentation](#documentation)
 7. [Deployment](#deployment)
+8. [Production](#production)
 
 ## Definition
 
@@ -56,20 +57,20 @@ This project implements a Basic Universal Crawler based on breadth first search 
 * Clone [repo](https://github.com/nichelia/ekrhizoc) on your local machine
 * Install [`conda`](https://www.anaconda.com) or [`miniconda`](https://docs.conda.io/en/latest/miniconda.html)
 * Create symlink for githooks (based on [`isort`](https://github.com/timothycrosley/isort), [`black`](https://github.com/psf/black)):  
-`make git-hooks`
+`$ make git-hooks`
 * Create your local project environment (based on [`conda`](https://www.anaconda.com), [`poetry`](https://python-poetry.org)):  
-`make env`
+`$ make env`
 * (Optional) Update existing local project environment:  
-`make env-update`
+`$ make env-update`
 
 ### Run locally
 
 On a terminal, run the following (execute on project's root directory):
 
 * Activate project environment:  
-`. ./scripts/helpers/environment.sh`
+`$ . ./scripts/helpers/environment.sh`
 * Run the CLI using `poetry`:  
-`poetry run ekrhizoc`
+`$ poetry run ekrhizoc`
 
 ### Contribute
 
@@ -82,7 +83,8 @@ N/A
 ## Versioning
 
 Increment the version number:  
-`poetry version {bump rule}` where valid bump rules are:
+`$ poetry version {bump rule}`  
+where valid bump rules are:
 
 1. patch
 2. minor
@@ -114,8 +116,34 @@ N/A
 
 ### Pip package
 
-N/A
+On a terminal, run the following (execute on project's root directory):
+
+* Activate project environment:  
+`$ . ./scripts/helpers/environment.sh`
+* To build pip package:  
+`$ make build-package`
+* To publish pip package (requires credentials to PyPi):  
+`$ make publish-package`
 
 ### Docker image
 
-N/A
+On a terminal, run the following (execute on project's root directory):
+
+* Activate project environment:  
+`$ . ./scripts/helpers/environment.sh`
+* To build docker image:  
+`$ make build-docker`
+
+## Production
+
+For production, a Docker image is used.
+This image is published publicly on [docker hub](https://hub.docker.com/repository/docker/nichelia/ekrhizoc).
+
+* First pull image from docker hub:  
+`$ docker pull nichelia/ekrhizoc:[version]`
+* First pull image from docker hub:  
+`$ docker run --rm -it -v ~/ekrhizoc_bin:/usr/src/bin nichelia/ekrhizoc:[version]`  
+This command mounts the application's bin (outcome) to user's directory under ekrhizoc_bin folder.
+
+where version is the published application version (e.g. 0.0.2)
+
