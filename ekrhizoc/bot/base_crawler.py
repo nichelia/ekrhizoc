@@ -1,7 +1,8 @@
 import time
-from typing import Any, Dict, List, Set
+from typing import Any, List, Set
 
 from ekrhizoc.bot.helpers import url_utils
+from ekrhizoc.settings import IGNORE_FILETYPES
 
 
 class BaseCrawler:
@@ -9,9 +10,7 @@ class BaseCrawler:
         self._name = ""
         self._seeds = []
         self._domains = []
-        self._ignore_filetypes = {
-            ".pdf",
-        }
+        self._ignore_filetypes = set((~IGNORE_FILETYPES).split(","))
         self._visited_urls = set()
         self._to_visit_urls = []
         self._output = ""
@@ -51,7 +50,7 @@ class BaseCrawler:
     def seeds(self, value: List) -> None:
         """Setter for seeds attribute.
 
-        Add to seeds list all the given seed url
+        Add to the seeds list all the given seed url
         in their canonicalised form (full url).
         Add to domain list all domains of seeds.
 
@@ -146,7 +145,7 @@ class BaseCrawler:
 
         Args:
             session: Client session for making HTTP requests.
-            url: The url for fetch.
+            url: The url to fetch.
 
         Returns:
             The page data (open to Any type).
@@ -177,11 +176,11 @@ class BaseCrawler:
         )
 
     def _fetch_links(self, session: Any = None, url: str = "") -> None:
-        """Logic functions to retrieve url links.
+        """Logic function to retrieve url links.
 
         Args:
             session: Client session for making HTTP requests.
-            url: The url for fetch links from.
+            url: The url to fetch links from.
 
         Raises:
             NotImplementedError: If this method is used but not

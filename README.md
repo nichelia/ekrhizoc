@@ -1,13 +1,13 @@
 # ekrhizoc
-ekrhizoc (e6c): A web crawler
+ekrhizoc (E6c): A web crawler
 
 ## Contents
 1. [Definition](#definition)
 2. [Use Case](#use-case)
-3. [Development](#deve∏lopment)
-4. [Testing](#testing)
-5. [Versioning](#versioning)
-6. [Documentation](#documentation)
+3. [Configuration](#configuration)
+4. [Development](#development)
+5. [Testing](#testing)
+6. [Versioning](#versioning)
 7. [Deployment](#deployment)
 8. [Production](#production)
 
@@ -16,7 +16,7 @@ ekrhizoc (e6c): A web crawler
 εκρίζωση (Greek)
 ekrízosi / uprooting, eradication
 
-Also known as __e6c__.
+Also known as __E6c__.
 
 ## Use Case
 
@@ -34,21 +34,36 @@ Output: simple textual sitemap (to show links between pages).
 ### Assumptions
 
 * The input URL (seed) is limited to __only__ one at every run.
-* The targeted URL(s) are not dynamically generated (no backend javascript parsing required).
-* Links to be extracted from HTML anchor <a> elements.
+* The targeted URL(s) are static pages (no backend javascript parsing required).
+* Links to be extracted from HTML anchor `<a>` elements.
 * Valid links include
     - Valid URL
         + Non empty
-        + Valid url address
-        + No longer than `URL_MAX_LENGTH` characters
-    - Link not visited before
-    - Link not part of ignored file types
-    - Link same domain as seed url
-    - Link not restricted in robots.txt
+        + Matches a valid url pattern
+        + Does not exceed the `E6C_MAX_URL_LENGTH` length in characters
+        + Possible to convert a relative urls to a full url
+    - Link is not visited before
+    - Link is not part of an ignored file type
+    - Link has the same domain as the seed url
+    - Link is not restricted by the robots.txt file
 
 ### Design
 
 This project implements a Basic Universal Crawler based on breadth first search graph traversal.
+
+## Configuration
+
+Behaviour of the application can be configured via Environment Variables.
+
+| Environment Variable | Description | Type | Default Value |
+| -------------- | -------------- | -------------- | -------------- |
+| `E6C_LOG_LEVEL` | Level of logging | string | DEBUG |
+| `E6C_LOG_DIR` | Directory to save logs | string | - |
+| `E6C_BIN_DIR` | Directory to save any output (bin) | string | bin |
+| `E6C_IGNORE_FILETYPES` | File types of websites to ignore (e.g. ".filetype1,.filetype2") | string | ".png,.pdf,.txt,.doc,.jpg,.gif" |
+| `E6C_URL_REQUEST_TIMER` | Time (in seconds) to wait per request (not to populate server with multiple requests) | float | 0.1 |
+| `E6C_MAX_URLS` | The maximum number of urls to fetch/crawl | integer | 10000 |
+| `E6C_MAX_URL_LENGTH` | The maximum length (character count) of a url to fetch/crawl | integer | 300 |
 
 ## Development
 
@@ -74,11 +89,11 @@ On a terminal, run the following (execute on project's root directory):
 
 ### Contribute
 
-N/A
+In progress...
 
 ## Testing
 
-N/A
+In progress.
 
 ## Versioning
 
@@ -107,10 +122,6 @@ Work should be logged under one of the following subtitles:
 
 On a release, a version of the following format should be added to all the current unreleased changes in the file.  
 `## [major.minor.patch] - YYYY-MM-DD`
-
-## Documentation
-
-N/A
 
 ## Deployment
 
@@ -143,7 +154,7 @@ This image is published publicly on [docker hub](https://hub.docker.com/reposito
 `$ docker pull nichelia/ekrhizoc:[version]`
 * First pull image from docker hub:  
 `$ docker run --rm -it -v ~/ekrhizoc_bin:/usr/src/bin nichelia/ekrhizoc:[version]`  
-This command mounts the application's bin (outcome) to user's directory under ekrhizoc_bin folder.
+This command mounts the application's bin (outcome) to user's root directory under ekrhizoc_bin folder.
 
-where version is the published application version (e.g. 0.0.2)
+where version is the published application version (e.g. 0.1.0)
 

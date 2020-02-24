@@ -2,6 +2,7 @@ from argparse import ArgumentParser, Namespace
 from pathlib import Path
 from typing import Callable, Dict
 
+from ekrhizoc import settings
 from ekrhizoc.cli.base_command import BaseCommand
 from ekrhizoc.cli.commands import commands
 from ekrhizoc.logging import logger, setup_logger
@@ -9,8 +10,9 @@ from ekrhizoc.logging import logger, setup_logger
 
 def main() -> None:
     """Entry point to CLI.
-    Setup logger,
-    Register `ekrhizoc` command along with
+
+    Sets up logger, output directory,
+    registers `ekrhizoc` command along with
     all the available CLI command modules as subcommands.
     """
     instantiated_commands = [C() for C in commands]
@@ -19,10 +21,9 @@ def main() -> None:
     parser = configure_parser(subcommands_map)
     args = parser.parse_args()
 
-    setup_logger(args.verbosity, Path("./"))
-    # TODO: Add directory to settings file
-    directory = Path("bin/")
-    directory.mkdir(parents=True, exist_ok=True)
+    setup_logger(args.verbosity)
+    bin_dir = Path(~settings.BIN_DIR)
+    bin_dir.mkdir(parents=True, exist_ok=True)
 
     # Show help message if no subcommand is given
     if not getattr(args, "subcommand", False):
@@ -31,11 +32,19 @@ def main() -> None:
     # Map command name to run method
     subcommand = subcommands_map[args.subcommand]
     run(subcommand, args)
-    return
 
 
 def run(command: BaseCommand, args: Namespace) -> Callable:
+    """Entry point of a command."""
     logger.debug(f"Run CLI command {command.name}")
+    all_settings = [getattr(settings, s) for s in settings.__dict__]
+    app_settings = list(
+        filter(lambda o: type(o) == settings.EkrhizocSetting, all_settings)
+    )
+    logger.debug("Settings:")
+    for setting in app_settings:
+        logger.debug(f'"{setting.name}": {setting.value}')
+
     self_cleaning_class = getattr(command, "self_cleaning", False)
     try:
         if self_cleaning_class:
