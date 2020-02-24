@@ -8,7 +8,6 @@
 import time
 from argparse import ArgumentParser, Namespace
 from timeit import default_timer
-from typing import List
 
 from ekrhizoc.bot.crawlers import UniversalBfsCrawler
 from ekrhizoc.bot.helpers import url_utils
@@ -44,10 +43,9 @@ class CrawlCommand(BaseCommand):
         )
 
     def validate_args(self, args: Namespace) -> None:
-        """Check if seed command argument.
+        """Check command given argument, seed.
 
-        Seed value is given or the generated full
-        url from the seed is empty.
+        Requires a non-empty seed.
 
         Raises:
             Exception: If seed url is not valid.
@@ -62,10 +60,13 @@ class CrawlCommand(BaseCommand):
         logger.debug(f'Command "{self.name}" took {elapsed_time:.2f} seconds.')
 
     def crawl(self, seed: str = "", filename: str = "") -> None:
-        """Calls the crawl bot with defined seed url.
+        """Calls the crawl bot with the provided seed url.
+
+        Execute crawl, write output structure and graph image.
 
         Args:
             seed: The given argument of the command.
+            filename: The file name for the output of the command.
         """
         crawler = UniversalBfsCrawler(seeds=[seed], output=filename)
         logger.debug(f'Use "{crawler.name}" crawler with seed urls: "{seed}"')

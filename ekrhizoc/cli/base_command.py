@@ -39,7 +39,6 @@ class BaseCommand:
         self.validate_args(args)
         logger.debug(f"Execute command with arguments: {args}")
         self._execute(args)
-        return
 
     def add_args(self, parser: ArgumentParser) -> None:
         """Add custom subcommand arguments to the parser.

@@ -10,8 +10,9 @@ from ekrhizoc.logging import logger, setup_logger
 
 def main() -> None:
     """Entry point to CLI.
-    Setup logger,
-    Register `ekrhizoc` command along with
+
+    Sets up logger, output directory,
+    registers `ekrhizoc` command along with
     all the available CLI command modules as subcommands.
     """
     instantiated_commands = [C() for C in commands]
@@ -31,10 +32,10 @@ def main() -> None:
     # Map command name to run method
     subcommand = subcommands_map[args.subcommand]
     run(subcommand, args)
-    return
 
 
 def run(command: BaseCommand, args: Namespace) -> Callable:
+    """Entry point of a command."""
     logger.debug(f"Run CLI command {command.name}")
     all_settings = [getattr(settings, s) for s in settings.__dict__]
     app_settings = list(

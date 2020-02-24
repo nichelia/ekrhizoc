@@ -12,7 +12,7 @@ logger_format = (
 
 
 class CustomFormatter(logging.Formatter):
-    """Logging Formatter to add colors and count warning / errors."""
+    """A custom logging formatter to add colors to logging levels."""
 
     grey = "\x1b[38;21m"
     yellow = "\x1b[33;21m"
@@ -39,7 +39,7 @@ def setup_logger(verbosity: int = 0) -> None:
     """Configure logger.
 
     Args:
-        verbosity: Integer value for verbosity of logs (-1 to 2).
+        verbosity: Integer value for verbosity of logs (range from -1 to 2).
 
     Raises:
         NotADirectoryError: If given path directory is not valid.
@@ -50,6 +50,8 @@ def setup_logger(verbosity: int = 0) -> None:
     log_level = base_loglevel - (verbosity * 10)
     logger.setLevel(log_level)
 
+    # If directory of logs exists, write to file.
+    # Otherwise default to stream.
     log_dir = ~LOG_DIR
     if log_dir:
         output_dir = Path(log_dir)

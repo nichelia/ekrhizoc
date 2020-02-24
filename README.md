@@ -39,12 +39,13 @@ Output: simple textual sitemap (to show links between pages).
 * Valid links include
     - Valid URL
         + Non empty
-        + Valid url address
-        + It is no longer than `E6C_MAX_URL_LENGTH` characters
+        + Matches a valid url pattern
+        + Does not exceed the `E6C_MAX_URL_LENGTH` length in characters
+        + Possible to convert a relative urls to a full url
     - Link is not visited before
     - Link is not part of an ignored file type
     - Link has the same domain as the seed url
-    - Link is not restricted by the robots.txt
+    - Link is not restricted by the robots.txt file
 
 ### Design
 
@@ -60,7 +61,7 @@ Behaviour of the application can be configured via Environment Variables.
 | `E6C_LOG_DIR` | Directory to save logs | string | - |
 | `E6C_BIN_DIR` | Directory to save any output (bin) | string | bin |
 | `E6C_IGNORE_FILETYPES` | File types of websites to ignore (e.g. ".filetype1,.filetype2") | string | ".png,.pdf,.txt,.doc,.jpg,.gif" |
-| `E6C_URL_REQUEST_TIMER` | Time to wait per request (not to populate server with multiple requests) | float | 0.1 |
+| `E6C_URL_REQUEST_TIMER` | Time (in seconds) to wait per request (not to populate server with multiple requests) | float | 0.1 |
 | `E6C_MAX_URLS` | The maximum number of urls to fetch/crawl | integer | 10000 |
 | `E6C_MAX_URL_LENGTH` | The maximum length (character count) of a url to fetch/crawl | integer | 300 |
 

@@ -39,11 +39,12 @@ class UniversalBfsCrawler(BaseCrawler):
     async def _fetch_page(self, session: Any = None, url: str = "") -> bytes:
         """Asynchronous implementation.
 
+        For every fetch call, the function will sleep for
+        URL_REQUEST_TIMER seconds.
+        Handles exception raised for when retrieval of page fails.
+
         Returns:
             The page contents in bytes.
-
-        Raises:
-            Exception: If retrieval of page data fails.
         """
         if not url:
             return None
@@ -61,7 +62,7 @@ class UniversalBfsCrawler(BaseCrawler):
         """Asynchronous implementation.
 
         Use of an htlm parser library to pick up hyperlinks by
-        search HTML anchor tags <a>.s
+        searching for HTML anchor tags <a>.
         """
         extracted_links = []
         if not raw_html:
@@ -72,14 +73,18 @@ class UniversalBfsCrawler(BaseCrawler):
         return extracted_links
 
     async def _is_valid_url(self, url: str = "", domain: str = "") -> bool:
-        """Asynchronous implementation.
+        """Asynchronous helper function.
 
-        Rules:
-            * URL is valid: check url pattern, length, fix relative urls
-            * URL is never visited before
-            * URL is not an ingored file type.
-            * URL is of the same domain as the seed.
-            * URL is not restricted by robots.txt file.
+        Check urls against the below rules.
+            * URL is valid:
+                - non-empty
+                - matches a valid url pattern
+                - does not exceed the MAX_URL_LENGTH length in characters
+                - possible to convert a relative urls to a full url
+            * URL is not visited before
+            * URL is not part of an ignored file type
+            * URL has the same domain as the seed url
+            * URL is not restricted by the robots.txt file
         """
         if not url:
             logger.debug("Invalid url: skipping...")
@@ -106,6 +111,10 @@ class UniversalBfsCrawler(BaseCrawler):
 
     async def _fetch_links(self, session: Any = None, url: str = "") -> None:
         """Asynchronous implementation.
+
+        Checks if urls are valid, if request returned any data and searches
+        for any valid links. Valid links are then added in a FIFO queue.
+        A graph is also constructed with nodes, edges.
         """
         valid_url = await self._is_valid_url(url)
         if not valid_url:
@@ -136,11 +145,11 @@ class UniversalBfsCrawler(BaseCrawler):
                 self.to_visit_urls.put(canonical_link)
                 self._graph.add_node(canonical_link)
                 self._graph.add_edge(url, canonical_link)
-        return
 
     async def _crawl(self):
         """Asynchronous implementation.
 
+        Assign seeds as the root nodes of the graph.
         """
         tasks = []
         for seed in self.seeds:
@@ -148,7 +157,7 @@ class UniversalBfsCrawler(BaseCrawler):
             self.to_visit_urls.put(seed)
             self._graph.add_node(seed)
 
-        logger.debug(f"Start async requests with settings {False}")
+        logger.debug("Start async requests...")
         async with aiohttp.ClientSession() as session:
             while not self.to_visit_urls.empty() and len(self.visited_urls) < ~MAX_URLS:
                 if len(self.to_visit_urls.queue) % 100 == 0:
@@ -159,7 +168,10 @@ class UniversalBfsCrawler(BaseCrawler):
                 _ = await asyncio.gather(*tasks)
 
     def crawl(self):
-        """
+        """Entrypoint.
+
+        Implement an asynchronous fetching of urls.
+        Once all tasks finish, return.
         """
         loop = asyncio.get_event_loop()
         future = asyncio.ensure_future(self._crawl())
@@ -172,12 +184,14 @@ class UniversalBfsCrawler(BaseCrawler):
         logger.info(f"URL pages fetched: {len(self.visited_urls)}")
 
     def write_output(self):
+        """Write the structure of a graph to the output file as yaml."""
         filepath = Path(~BIN_DIR) / (self.output + ".yaml")
         nx.write_yaml(self._graph, filepath)
-        logger.info(f"Structure output can be found here: {filepath}")
+        logger.info(f"Graph structure output can be found here: {filepath}")
 
     def draw_output(self):
+        """Write the graph image of a graph to the output file as png."""
         filepath = Path(~BIN_DIR) / (self.output + ".png")
         nx.draw(self._graph)
         plt.savefig(filepath)
-        logger.info(f"Graph output can be found here: {filepath}")
+        logger.info(f"Graph image output can be found here: {filepath}")

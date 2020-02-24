@@ -20,26 +20,53 @@ class EkrhizocSetting:
         self.description = description
         self._name = "_".join(("E6C", self.field.upper()))
 
-    def __invert__(self):
-        """
-        Access the setting value by using the invert ~
+    def __invert__(self) -> Any:
+        """ Helper function.
+
+        For convinience, access the setting value
+        by using the invert ~.
         e.g. ~EkrhizocSetting == EkrhizocSetting.value
+
+        Returns:
+            The value of the value attribute.
         """
         return self.value
 
     @property
-    def name(self):
+    def name(self) -> str:
+        """Getter for name attribute.
+
+        Returns:
+            The value of the name attribute.
+        """
         return self._name
 
     @property
-    def env_var(self):
+    def env_var(self) -> Any:
+        """Getter for env_var attribute.
+
+        Check for a value in the environment variable,
+        or the alias environment variable.
+
+
+        Returns:
+            The value of the env_var attribute (default None).
+        """
         return getenv(
             self._name,
             getenv(self.env_var_alias, None) if self.env_var_alias else None,
         )
 
     @property
-    def value(self):
+    def value(self) -> Any:
+        """Getter for value attribute.
+
+        If a value exists in an environment variable,
+        return it otherwise return the default value.
+
+        Returns:
+            The value of the value attribute.
+        """
         if self.env_var:
             return self.datatype(self.env_var)
         return self.default_value
@@ -77,7 +104,7 @@ URL_REQUEST_TIMER = EkrhizocSetting(
     field="url_request_timer",
     datatype=float,
     default_value=0.1,
-    description="Time to wait per request (not to populate server with multiple requests)",
+    description="Time (in seconds) to wait per request (not to populate server with multiple requests)",
 )
 
 MAX_URLS = EkrhizocSetting(
