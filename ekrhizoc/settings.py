@@ -48,7 +48,7 @@ class EkrhizocSetting:
 LOG_LEVEL = EkrhizocSetting(
     field="log_level",
     datatype=str,
-    default_value="DEBUG",
+    default_value="INFO",
     description="Level of logging",
 )
 
