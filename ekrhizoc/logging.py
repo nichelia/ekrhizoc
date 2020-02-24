@@ -3,6 +3,8 @@ import os
 from datetime import datetime
 from pathlib import Path
 
+from ekrhizoc.settings import LOG_DIR, LOG_LEVEL
+
 logger = logging.getLogger(__name__)
 logger_format = (
     "%(asctime)s - %(name)s - %(levelname)s - %(message)s (%(filename)s:%(lineno)d)"
@@ -33,28 +35,27 @@ class CustomFormatter(logging.Formatter):
         return formatter.format(record)
 
 
-def setup_logger(verbosity: int = 0, output_dir: Path = None) -> None:
+def setup_logger(verbosity: int = 0) -> None:
     """Configure logger.
 
     Args:
         verbosity: Integer value for verbosity of logs (-1 to 2).
-        output_dir: Path object to set the directory to output log file.
 
     Raises:
         NotADirectoryError: If given path directory is not valid.
     """
-    # TODO: Move LOGLEVEL to settings file
-    # default level to WARNING
-    base_loglevel = getattr(logging, (os.getenv("LOGLEVEL", "WARNING")).upper())
+    base_loglevel = getattr(logging, (~LOG_LEVEL).upper(), "WARNING")
     # Limit verbosity to value 2
     verbosity = min(verbosity, 2)
     log_level = base_loglevel - (verbosity * 10)
     logger.setLevel(log_level)
 
-    if output_dir:
-        filepath = output_dir / "ekrhizoc.log"
+    log_dir = ~LOG_DIR
+    if log_dir:
+        output_dir = Path(log_dir)
         if not output_dir.is_dir():
             raise NotADirectoryError(f"{output_dir} is not a directory")
+        filepath = output_dir / "ekrhizoc.log"
         handler = logging.FileHandler(filepath)
         handler.setFormatter(logging.Formatter(logger_format))
     else:

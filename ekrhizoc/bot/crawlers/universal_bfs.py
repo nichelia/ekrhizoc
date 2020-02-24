@@ -19,6 +19,7 @@ from bs4 import BeautifulSoup
 from ekrhizoc.bot.base_crawler import BaseCrawler
 from ekrhizoc.bot.helpers import url_utils
 from ekrhizoc.logging import logger
+from ekrhizoc.settings import BIN_DIR, MAX_URLS, URL_REQUEST_TIMER
 
 
 class UniversalBfsCrawler(BaseCrawler):
@@ -46,8 +47,7 @@ class UniversalBfsCrawler(BaseCrawler):
         """
         if not url:
             return None
-        # TODO: Get timeout value from settings
-        await asyncio.sleep(0.1)
+        await asyncio.sleep(~URL_REQUEST_TIMER)
         try:
             async with session.get(url) as response:
                 if response.status == 200:
@@ -142,8 +142,6 @@ class UniversalBfsCrawler(BaseCrawler):
         """Asynchronous implementation.
 
         """
-        # TODO: Add settings: DEPTH, PARALLEL_REQUEST_LIMIT, IGNORE_FILETYPES
-        # TODO: Change visited magic number 1000
         tasks = []
         for seed in self.seeds:
             logger.debug(f"Add seed {seed}")
@@ -152,8 +150,7 @@ class UniversalBfsCrawler(BaseCrawler):
 
         logger.debug(f"Start async requests with settings {False}")
         async with aiohttp.ClientSession() as session:
-            # TODO: Settings for maximum visited pages
-            while not self.to_visit_urls.empty() and len(self.visited_urls) < 10000:
+            while not self.to_visit_urls.empty() and len(self.visited_urls) < ~MAX_URLS:
                 if len(self.to_visit_urls.queue) % 100 == 0:
                     logger.debug(f"Queued urls: {len(self.to_visit_urls.queue)}")
                 url = self.to_visit_urls.get()
@@ -175,12 +172,12 @@ class UniversalBfsCrawler(BaseCrawler):
         logger.info(f"URL pages fetched: {len(self.visited_urls)}")
 
     def write_output(self):
-        filepath = Path("bin/") / (self.output + ".yaml")
+        filepath = Path(~BIN_DIR) / (self.output + ".yaml")
         nx.write_yaml(self._graph, filepath)
         logger.info(f"Structure output can be found here: {filepath}")
 
     def draw_output(self):
-        filepath = Path("bin/") / (self.output + ".png")
+        filepath = Path(~BIN_DIR) / (self.output + ".png")
         nx.draw(self._graph)
         plt.savefig(filepath)
         logger.info(f"Graph output can be found here: {filepath}")

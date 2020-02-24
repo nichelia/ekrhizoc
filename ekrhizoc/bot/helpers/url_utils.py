@@ -6,6 +6,7 @@ import urlcanon
 from reppy.robots import Robots
 
 from ekrhizoc.logging import logger
+from ekrhizoc.settings import MAX_URL_LENGTH
 
 
 def _canonicalise_url(url: str = "") -> str:
@@ -32,8 +33,7 @@ def _is_valid_url(url: str = "") -> bool:
     if not pattern.match(url):
         return False
 
-    # TODO: Variable here - no magic number
-    if not len(url) < 300:
+    if not len(url) < ~MAX_URL_LENGTH:
         return False
 
     return True

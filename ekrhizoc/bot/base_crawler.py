@@ -2,6 +2,7 @@ import time
 from typing import Any, Dict, List, Set
 
 from ekrhizoc.bot.helpers import url_utils
+from ekrhizoc.settings import IGNORE_FILETYPES
 
 
 class BaseCrawler:
@@ -9,10 +10,7 @@ class BaseCrawler:
         self._name = ""
         self._seeds = []
         self._domains = []
-        # TODO: Add to settings
-        self._ignore_filetypes = {
-            ".pdf",
-        }
+        self._ignore_filetypes = set((~IGNORE_FILETYPES).split(","))
         self._visited_urls = set()
         self._to_visit_urls = []
         self._output = ""
