@@ -8,6 +8,7 @@
 import asyncio
 import os
 import queue
+from http import HTTPStatus
 from pathlib import Path
 from typing import Any, List
 
@@ -51,7 +52,7 @@ class UniversalBfsCrawler(BaseCrawler):
         await asyncio.sleep(~URL_REQUEST_TIMER)
         try:
             async with session.get(url) as response:
-                if response.status == 200:
+                if response.status == HTTPStatus.OK.value:
                     return await response.read()
                 return None
         except Exception as e:
@@ -103,7 +104,7 @@ class UniversalBfsCrawler(BaseCrawler):
             logger.debug(f"Different domain: skipping url {url}")
             return False
 
-        if domain and url_utils.is_robots_restricted(url, domain):
+        if domain and url_utils.is_robots_restricted(url):
             logger.debug(f"Restricted by robots.txt: skipping url {url}")
             return False
 
@@ -137,7 +138,7 @@ class UniversalBfsCrawler(BaseCrawler):
         for domain in self.domains:
             for link in links:
                 link_href = link.get("href", "")
-                canonical_link = url_utils.get_full_url(link_href, domain)
+                canonical_link = url_utils.get_full_url(link_href, url)
                 valid_link = await self._is_valid_url(canonical_link, domain)
                 if not valid_link:
                     continue
