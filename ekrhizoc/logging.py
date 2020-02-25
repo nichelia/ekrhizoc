@@ -44,10 +44,14 @@ def setup_logger(verbosity: int = 0) -> None:
     Raises:
         NotADirectoryError: If given path directory is not valid.
     """
-    base_loglevel = getattr(logging, (~LOG_LEVEL).upper(), "WARNING")
-    # Limit verbosity to value 2
-    verbosity = min(verbosity, 2)
-    log_level = base_loglevel - (verbosity * 10)
+    if ~LOG_LEVEL:
+        base_loglevel = getattr(logging, (~LOG_LEVEL).upper(), "WARNING")
+        log_level = base_loglevel
+    else:
+        base_loglevel = getattr(logging, "WARNING")
+        # Limit verbosity to value 2
+        verbosity = min(verbosity, 2)
+        log_level = base_loglevel - (verbosity * 10)
     logger.setLevel(log_level)
 
     # If directory of logs exists, write to file.

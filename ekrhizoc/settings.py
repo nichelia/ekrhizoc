@@ -75,8 +75,8 @@ class EkrhizocSetting:
 LOG_LEVEL = EkrhizocSetting(
     field="log_level",
     datatype=str,
-    default_value="INFO",
-    description="Level of logging",
+    default_value="",
+    description="Level of logging - overrides verbose flag",
 )
 
 LOG_DIR = EkrhizocSetting(

@@ -57,7 +57,7 @@ Behaviour of the application can be configured via Environment Variables.
 
 | Environment Variable | Description | Type | Default Value |
 | -------------- | -------------- | -------------- | -------------- |
-| `E6C_LOG_LEVEL` | Level of logging | string | DEBUG |
+| `E6C_LOG_LEVEL` | Level of logging - overrides verbose/quiet flag | string | - |
 | `E6C_LOG_DIR` | Directory to save logs | string | - |
 | `E6C_BIN_DIR` | Directory to save any output (bin) | string | bin |
 | `E6C_IGNORE_FILETYPES` | File types of websites to ignore (e.g. ".filetype1,.filetype2") | string | ".png,.pdf,.txt,.doc,.jpg,.gif" |
@@ -89,11 +89,20 @@ On a terminal, run the following (execute on project's root directory):
 
 ### Contribute
 
-In progress...
+[ Not Available ]
 
 ## Testing
 
-In progress.
+[ Work in progress... ]
+
+To run the tests, open a terminal and run the following (execute on project's root directory):
+
+* Activate project environment:  
+`$ . ./scripts/helpers/environment.sh`
+* To run pytest:  
+`$ pytest -v`
+* To check test coverage:  
+`$ pytest --cov=. --cov-report=term-missing`
 
 ## Versioning
 

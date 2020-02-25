@@ -50,7 +50,7 @@ class CrawlCommand(BaseCommand):
         Raises:
             Exception: If seed url is not valid.
         """
-        if args.seed and url_utils.get_full_url(args.seed) == "":
+        if url_utils.get_full_url(args.seed) == "":
             raise Exception(f'The given seed "{args.seed}" is an invalid url.')
 
     def execute(self, args: Namespace) -> None:
