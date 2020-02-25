@@ -89,9 +89,11 @@ On a terminal, run the following (execute on project's root directory):
 
 ### Contribute
 
-In progress...
+[ Not Available ]
 
 ## Testing
+
+[ Work in progress... ]
 
 To run the tests, open a terminal and run the following (execute on project's root directory):
 
