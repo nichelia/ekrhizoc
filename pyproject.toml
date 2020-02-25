@@ -2,8 +2,14 @@
 name = "ekrhizoc"
 version = "0.0.5"
 description = "A simple python web crawler"
+license = "MIT"
 authors = ["Nicholas Elia <me@nichelia.com>"]
-include = ["README.md"]
+maintainers = ["Nicholas Elia <me@nichelia.com>"]
+readme = "README.md"
+homepage = "https://github.com/nichelia/ekrhizoc"
+repository = "https://github.com/nichelia/ekrhizoc"
+keywords = ["python", "web", "crawl"]
+include = ["CHANGELOG.md"]
 
 [tool.poetry.dependencies]
 python = "^3.7"              # PSF
