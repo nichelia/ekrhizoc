@@ -110,9 +110,9 @@ To run the tests, open a terminal and run the following (execute on project's ro
 * Activate project environment:  
 `$ . ./scripts/helpers/environment.sh`
 * To run pytest:  
-`$ pytest -v`
+`$ make test`
 * To check test coverage:  
-`$ pytest --cov=. --cov-report=term-missing`
+`$ make test-coverage`
 
 ## Versioning
 

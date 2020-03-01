@@ -40,6 +40,15 @@ publish-package:
 build-docker:
 	./scripts/build_docker_image.sh
 
+### Test ###
+.PHONY: test
+test:
+	pytest -v
+
+.PHONY: test-coverage
+test-coverage:
+	pytest --cov=. --cov-report=term-missing
+
 ### Util ###
 .PHONY : clean
 clean :
