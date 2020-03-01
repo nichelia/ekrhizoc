@@ -53,5 +53,5 @@ test-coverage:
 .PHONY : clean
 clean :
 	./scripts/helpers/conda-remove-env.sh
-	rm -rf bin dist *.egg-info *.log
+	rm -rf bin dist .pytest_cache .coverage *.egg-info *.log
 	find . -path "*/__pycache__" -type d -exec rm -r {} ';'
