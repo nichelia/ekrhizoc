@@ -12,15 +12,14 @@ install:
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
-  - conda install -c anaconda gcc_linux-64
   - conda info -a
   # Create project environment, dependencies
-  - make env
+  - bash ./scripts/helpers/environment.sh
 
 script:
-  - bash . ./scripts/helpers/environment.sh
-  - make test
-  - make test-coverage
+  - bash ./scripts/helpers/environment.sh
+  - pytest -v
+  - pytest --cov=. --cov-report=term-missing
 
 after_success:
   - codecov
