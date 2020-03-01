@@ -3,6 +3,8 @@
 
 [![code alerts](https://img.shields.io/lgtm/alerts/g/nichelia/ekrhizoc.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nichelia/ekrhizoc/alerts/)
 [![code quality: Python](https://img.shields.io/lgtm/grade/python/g/nichelia/ekrhizoc.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nichelia/ekrhizoc/context:python)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+
 
 # ekrhizoc
 ekrhizoc (E6c): A web crawler
