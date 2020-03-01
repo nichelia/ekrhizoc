@@ -1,14 +1,12 @@
-[![pypi package](https://img.shields.io/pypi/v/ekrhizoc?logo=pypi&logoColor=white)](https://pypi.org/project/ekrhizoc)
-[![docker image](https://img.shields.io/docker/v/nichelia/ekrhizoc?label=docker&logo=docker&logoColor=white)](https://hub.docker.com/repository/docker/nichelia/ekrhizoc)
-[![downloads](https://img.shields.io/pypi/dm/ekrhizoc?logo=pypi&logoColor=white)](https://pypi.org/project/ekrhizoc)
-[![docker pulls](https://img.shields.io/docker/pulls/nichelia/ekrhizoc?label=pulls&logo=docker&logoColor=white)](https://hub.docker.com/repository/docker/nichelia/ekrhizoc/general)
+[![github latest release](https://badgen.net/github/release/nichelia/ekrhizoc?icon=github)](https://github.com/nichelia/ekrhizoc/releases/latest/)
+[![pypi latest package](https://badgen.net/pypi/v/ekrhizoc?label=pypi%20pacakge)](https://pypi.org/project/ekrhizoc/)
+[![docker latest image](https://img.shields.io/docker/v/nichelia/ekrhizoc?label=docker&logo=docker&logoColor=white)](https://hub.docker.com/repository/docker/nichelia/ekrhizoc)
+[![project license](https://badgen.net/github/license/nichelia/ekrhizoc?color=purple)](https://github.com/nichelia/ekrhizoc/blob/master/LICENSE)
 
-[![issue tracking](https://img.shields.io/badge/issue_tracking-github-green.svg)](https://github.com/nichelia/ekrhizoc/issues)
-[![pr policy](https://img.shields.io/badge/PR-Welcome-%23FF8300.svg?)](https://git-scm.com/book/en/v2/GitHub-Contributing-to-a-Project)
-[![code alerts](https://img.shields.io/lgtm/alerts/g/nichelia/ekrhizoc.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nichelia/ekrhizoc/alerts/)
-[![code quality: python](https://img.shields.io/lgtm/grade/python/g/nichelia/ekrhizoc.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nichelia/ekrhizoc/context:python)
-[![code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
-[![license: MIT](https://img.shields.io/pypi/l/ekrhizoc?color=purple)](https://github.com/nichelia/ekrhizoc/blob/master/LICENSE)
+[![security scan](https://badgen.net/dependabot/nichelia/ekrhizoc/?icon=dependabot&label=security%20scan)](https://github.com/nichelia/ekrhizoc/labels/security%20patch)
+[![code alerts](https://badgen.net/lgtm/alerts/g/nichelia/ekrhizoc?icon=lgtm&label=code%20alerts)](https://lgtm.com/projects/g/nichelia/ekrhizoc/alerts/)
+[![code quality](https://badgen.net/lgtm/grade/g/nichelia/ekrhizoc?icon=lgtm&label=code%20quality)](https://lgtm.com/projects/g/nichelia/ekrhizoc/context:python)
+[![code style](https://badgen.net/badge/code%20style/black/color=black)](https://github.com/ambv/black)
 
 # ekrhizoc
 ekrhizoc (E6c): A web crawler
