@@ -1,10 +1,10 @@
-
+[![pypi package](https://img.shields.io/pypi/v/ekrhizoc)](https://pypi.org/project/ekrhizoc)
 [![downloads](https://pepy.tech/badge/ekrhizoc)](https://pepy.tech/project/ekrhizoc)
 
 [![code alerts](https://img.shields.io/lgtm/alerts/g/nichelia/ekrhizoc.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nichelia/ekrhizoc/alerts/)
 [![code quality: Python](https://img.shields.io/lgtm/grade/python/g/nichelia/ekrhizoc.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nichelia/ekrhizoc/context:python)
 [![code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
-[![license: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![license: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](https://github.com/nichelia/ekrhizoc/blob/master/LICENSE)
 
 # ekrhizoc
 ekrhizoc (E6c): A web crawler
