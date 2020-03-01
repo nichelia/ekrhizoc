@@ -3,9 +3,6 @@ SHELL := /bin/bash
 MODULE=ekrhizoc
 VERSION=$$(poetry version | grep -o [0-9].[0-9].[0-9])
 
-EKRHIZOC_WHEEL=$$(find . -type f -name "*.whl")
-EKRHIZOC_WHEEL_NAME=$$(basename $(EKRHIZOC_WHEEL))
-
 ### Environment ###
 .PHONY: env
 env:
@@ -40,9 +37,18 @@ publish-package:
 build-docker:
 	./scripts/build_docker_image.sh
 
+### Test ###
+.PHONY: test
+test:
+	pytest -v
+
+.PHONY: test-coverage
+test-coverage:
+	pytest --cov=. --cov-report=term-missing
+
 ### Util ###
 .PHONY : clean
 clean :
 	./scripts/helpers/conda-remove-env.sh
-	rm -rf bin dist *.egg-info *.log
+	rm -rf bin dist .pytest_cache .coverage *.egg-info *.log
 	find . -path "*/__pycache__" -type d -exec rm -r {} ';'

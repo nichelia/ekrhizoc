@@ -1,3 +1,15 @@
+[![github latest release](https://badgen.net/github/release/nichelia/ekrhizoc?icon=github)](https://github.com/nichelia/ekrhizoc/releases/latest/)
+[![pypi latest package](https://badgen.net/pypi/v/ekrhizoc?label=pypi%20pacakge)](https://pypi.org/project/ekrhizoc/)
+[![docker latest image](https://img.shields.io/docker/v/nichelia/ekrhizoc?label=image&logo=docker&logoColor=white)](https://hub.docker.com/repository/docker/nichelia/ekrhizoc)
+[![project license](https://badgen.net/github/license/nichelia/ekrhizoc?color=purple)](https://github.com/nichelia/ekrhizoc/blob/master/LICENSE)
+
+[![build status](https://badgen.net/travis/nichelia/ekrhizoc?label=build)](https://travis-ci.com/nichelia/ekrhizoc)
+[![security scan](https://badgen.net/dependabot/nichelia/ekrhizoc/?label=security%20scan)](https://github.com/nichelia/ekrhizoc/labels/security%20patch)
+[![code coverage](https://badgen.net/codecov/c/github/nichelia/ekrhizoc?label=code%20coverage)](https://codecov.io/gh/nichelia/ekrhizoc)
+[![code alerts](https://badgen.net/lgtm/alerts/g/nichelia/ekrhizoc?label=code%20alerts)](https://lgtm.com/projects/g/nichelia/ekrhizoc/alerts/)
+[![code quality](https://badgen.net/lgtm/grade/g/nichelia/ekrhizoc?label=code%20quality)](https://lgtm.com/projects/g/nichelia/ekrhizoc/context:python)
+[![code style](https://badgen.net/badge/code%20style/black/color=black)](https://github.com/ambv/black)
+
 # ekrhizoc
 ekrhizoc (E6c): A web crawler
 
@@ -100,9 +112,9 @@ To run the tests, open a terminal and run the following (execute on project's ro
 * Activate project environment:  
 `$ . ./scripts/helpers/environment.sh`
 * To run pytest:  
-`$ pytest -v`
+`$ make test`
 * To check test coverage:  
-`$ pytest --cov=. --cov-report=term-missing`
+`$ make test-coverage`
 
 ## Versioning
 
