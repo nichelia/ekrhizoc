@@ -1,6 +1,9 @@
 
 [![downloads](https://pepy.tech/badge/ekrhizoc)](https://pepy.tech/project/ekrhizoc)
 
+[![code alerts](https://img.shields.io/lgtm/alerts/g/nichelia/ekrhizoc.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nichelia/ekrhizoc/alerts/)
+[![code quality: Python](https://img.shields.io/lgtm/grade/python/g/nichelia/ekrhizoc.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/nichelia/ekrhizoc/context:python)
+
 # ekrhizoc
 ekrhizoc (E6c): A web crawler
 
