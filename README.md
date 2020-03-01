@@ -1,3 +1,6 @@
+
+[![downloads](https://pepy.tech/badge/ekrhizoc)](https://pepy.tech/project/ekrhizoc)
+
 # ekrhizoc
 ekrhizoc (E6c): A web crawler
 
