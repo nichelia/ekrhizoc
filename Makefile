@@ -3,9 +3,6 @@ SHELL := /bin/bash
 MODULE=ekrhizoc
 VERSION=$$(poetry version | grep -o [0-9].[0-9].[0-9])
 
-EKRHIZOC_WHEEL=$$(find . -type f -name "*.whl")
-EKRHIZOC_WHEEL_NAME=$$(basename $(EKRHIZOC_WHEEL))
-
 ### Environment ###
 .PHONY: env
 env:
