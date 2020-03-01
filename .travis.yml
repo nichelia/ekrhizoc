@@ -1,8 +1,9 @@
-dist: bionic
 language: python
 python:
   - "3.7"
 install:
+  # Machine storage
+  - df -h
   # Install apt updates of packages
   - sudo apt-get update
   # Install miniconda python 3
@@ -14,12 +15,12 @@ install:
   - conda update -q conda
   - conda info -a
   # Create project environment, dependencies
-  - bash ./scripts/helpers/environment.sh
+  - make env
 
 script:
   - bash ./scripts/helpers/environment.sh
-  - pytest -v
-  - pytest --cov=. --cov-report=term-missing
+  - make test
+  - make test-coverage
 
 after_success:
   - codecov
