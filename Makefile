@@ -37,6 +37,11 @@ publish-package:
 build-docker:
 	./scripts/build_docker_image.sh
 
+### Lint ###
+.PHONY: lint
+lint:
+	pylint $(MODULE)
+
 ### Test ###
 .PHONY: test
 test:
