@@ -28,7 +28,7 @@ reppy = "^0.4.14"            # MIT
 [tool.poetry.dev-dependencies]
 black = "19.10b0"            # MIT
 isort = "4.3.4"              # MIT
-mock = "4.0.1"               # BSD
+mock = "4.0.2"               # BSD
 pylint = "^2.4.4"            # GPLv2, but only used as a tool
 pytest = "^5.3"              # MIT
 pytest-cov = "^2.8"          # MIT
