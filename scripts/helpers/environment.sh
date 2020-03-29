@@ -64,8 +64,14 @@ setup_environment()
   fi
 }
 
+setup_precommits()
+{
+  pre-commit install
+}
+
 if [[ ${force} = true ]]; then
   setup_environment
+  setup_precommits
   return
 fi
 
@@ -74,7 +80,7 @@ fi
 activated_environment=$(source "${script_dir}/conda-create-env.sh" -a >/dev/null 2>&1)
 if [[ $? -ne 0 ]]; then
   setup_environment
+  setup_precommits
 else
   source "${script_dir}/conda-create-env.sh" -a
 fi
-
