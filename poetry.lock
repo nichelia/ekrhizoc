@@ -345,7 +345,13 @@ description = "A Python utility / library to sort Python imports."
 name = "isort"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "4.3.4"
+version = "4.3.21"
+
+[package.extras]
+pipfile = ["pipreqs", "requirementslib"]
+pyproject = ["toml"]
+requirements = ["pipreqs", "pip-api"]
+xdg_home = ["appdirs (>=1.4.0)"]
 
 [[package]]
 category = "main"
@@ -956,7 +962,7 @@ multidict = ">=4.0"
 [[package]]
 category = "main"
 description = "Backport of pathlib-compatible object wrapper for zip files"
-marker = "python_version >= \"3.5\" and python_version < \"3.8\" or python_version < \"3.8\""
+marker = "python_version >= \"3.5\" and python_version < \"3.8\" or python_version < \"3.8\" or python_version >= \"3.5\" and python_version < \"3.8\" and (python_version >= \"3.5\" and python_version < \"3.8\" or python_version < \"3.8\")"
 name = "zipp"
 optional = false
 python-versions = ">=3.6"
@@ -967,8 +973,8 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "77f81c95e2e352aed4ee44d3a3b8d3a0ebc42f3cfc4fe3840c29124156dda84f"
-python-versions = "^3.7"              # PSF
+content-hash = "0e0edea1293e3a399b7777c03eb89e96e9b017ef425ded7f11defe9aa94c0fda"
+python-versions = "^3.7"
 
 [metadata.files]
 aiodns = [
@@ -1171,9 +1177,8 @@ importlib-metadata = [
     {file = "importlib_metadata-1.1.3.tar.gz", hash = "sha256:7a99fb4084ffe6dae374961ba7a6521b79c1d07c658ab3a28aa264ee1d1b14e3"},
 ]
 isort = [
-    {file = "isort-4.3.4-py2-none-any.whl", hash = "sha256:ec9ef8f4a9bc6f71eec99e1806bfa2de401650d996c59330782b89a5555c1497"},
-    {file = "isort-4.3.4-py3-none-any.whl", hash = "sha256:1153601da39a25b14ddc54955dbbacbb6b2d19135386699e2ad58517953b34af"},
-    {file = "isort-4.3.4.tar.gz", hash = "sha256:b9c40e9750f3d77e6e4d441d8b0266cf555e7cdabdcff33c4fd06366ca761ef8"},
+    {file = "isort-4.3.21-py2.py3-none-any.whl", hash = "sha256:6e811fcb295968434526407adb8796944f1988c5b65e8139058f2014cbe100fd"},
+    {file = "isort-4.3.21.tar.gz", hash = "sha256:54da7e92468955c4fceacd0c86bd0ec997b0e1ee80d97f67c35a78b719dccab1"},
 ]
 jeepney = [
     {file = "jeepney-0.4.2-py3-none-any.whl", hash = "sha256:6f45dce1125cf6c58a1c88123d3831f36a789f9204fbad3172eac15f8ccd08d0"},
