@@ -8,10 +8,14 @@
 
 script_name="$(basename -- "$0")"
 
-# Formats
+# Colour Formats
+# shellcheck disable=SC2034
 bold="\033[1m"
+# shellcheck disable=SC2034
 green="\033[0;32m"
+# shellcheck disable=SC2034
 red="\033[91m"
+# shellcheck disable=SC2034
 no_color="\033[0m"
 
 usage()
@@ -24,7 +28,6 @@ usage()
     echo "    " "  --help, -h              Show this help message and exit."
 }
 
-arg_count=0
 force=false
 prod=false
 while [[ $# -gt 0 ]]; do
@@ -42,7 +45,7 @@ while [[ $# -gt 0 ]]; do
             exit 0
             ;;
         *)
-            >&2 echo "$tag" "error: '$1' not a recognized argument/option"
+            >&2 echo "error: '$1' not a recognized argument/option"
             >&2 usage
             exit 1
             ;;
@@ -54,7 +57,9 @@ script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 setup_environment()
 {
+  # shellcheck source=/dev/null
   source "${script_dir}/conda-create-env.sh"
+  # shellcheck source=/dev/null
   source "${script_dir}/poetry_setup.sh"
 
   if [[ ${prod} = true ]]; then
@@ -77,10 +82,12 @@ fi
 
 # Try and activate conda environment first.
 # If fails, then create environment.
+# shellcheck source=/dev/null
 activated_environment=$(source "${script_dir}/conda-create-env.sh" -a >/dev/null 2>&1)
-if [[ $? -ne 0 ]]; then
+if [[ "$activated_environment" -ne 0 ]]; then
   setup_environment
   setup_precommits
 else
+  # shellcheck source=/dev/null
   source "${script_dir}/conda-create-env.sh" -a
 fi

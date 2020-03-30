@@ -1,5 +1,7 @@
+"""Commands init
+"""
 from ekrhizoc.cli.commands.crawl import CrawlCommand
 
-commands = [
+COMMANDS = [
     CrawlCommand,
 ]

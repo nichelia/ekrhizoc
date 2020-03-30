@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Badges for the project in README
 - Setup CI with Travis
 - Test coverage support with Codecov
+- Pre-commit hooks
+- Pylint / shellcheck code fixes
 
 ## [0.1.0] - 2020-02-25
 ### Added
@@ -47,4 +49,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [Unreleased]: https://github.com/nichelia/ekrhizoc/compare/0.1.0...HEAD
 [0.1.0]: https://github.com/nichelia/ekrhizoc/compare/0.0.5...0.1.0
 [0.0.5]: https://github.com/nichelia/ekrhizoc/releases/tag/0.0.5
-
