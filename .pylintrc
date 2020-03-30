@@ -436,7 +436,7 @@ single-line-if-stmt=no
 
 # Format style used to check logging format string. `old` means using %
 # formatting, while `new` is for `{}` formatting.
-logging-format-style=old
+logging-format-style=fstr
 
 # Logging modules to check that the string format arguments are in logging
 # function parameter format.
@@ -502,7 +502,7 @@ known-third-party=enchant
 [DESIGN]
 
 # Maximum number of arguments for function / method.
-max-args=5
+max-args=10
 
 # Maximum number of attributes for a class (see R0902).
 max-attributes=7

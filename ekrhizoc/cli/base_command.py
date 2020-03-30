@@ -1,9 +1,14 @@
+"""base_command
+"""
 from argparse import ArgumentParser, Namespace
 
-from ekrhizoc.logging import logger
+from ekrhizoc.logger import LOGGER
 
 
 class BaseCommand:
+    """BaseCommand
+    """
+
     def __init__(self):
         self._name = ""
 
@@ -35,9 +40,9 @@ class BaseCommand:
         Args:
             args: The Namespace object for the subcommand.
         """
-        logger.debug(f"Validate arguments: {args}")
+        LOGGER.debug(f"Validate arguments: {args}")
         self.validate_args(args)
-        logger.debug(f"Execute command with arguments: {args}")
+        LOGGER.debug(f"Execute command with arguments: {args}")
         self._execute(args)
 
     def add_args(self, parser: ArgumentParser) -> None:
@@ -70,7 +75,7 @@ class BaseCommand:
 
     def _execute(self, args: Namespace) -> None:
         """Internal function to run command's execute safely.
-        
+
         Args:
             args: The Namespace object for the subcommand.
 
@@ -79,16 +84,16 @@ class BaseCommand:
         """
         try:
             self.execute(args)
-        except Exception as e:
-            logger.critical(e)
-            raise SystemError(e)
+        except Exception as error:
+            LOGGER.critical(error)
+            raise SystemError(error)
 
     def execute(self, args: Namespace) -> None:
         """Logic of CLI command.
 
         Args:
             args: The Namespace object for the subcommand.
-        
+
         Raises:
             NotImplementedError: If this method is used but not
                 defined in the subcommand class.

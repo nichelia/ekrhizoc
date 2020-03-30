@@ -1,3 +1,5 @@
+"""crawl_test
+"""
 import time
 from argparse import ArgumentParser
 
@@ -7,6 +9,9 @@ from ekrhizoc.cli.commands.crawl import CrawlCommand
 
 
 class TestCrawlCommand:
+    """TestCrawlCommand
+    """
+
     @pytest.mark.parametrize(
         "args, error",
         [
@@ -23,6 +28,8 @@ class TestCrawlCommand:
         ],
     )
     def test_add_args(self, args, error):
+        """test_add_args
+        """
         parser = ArgumentParser()
         CrawlCommand().add_args(parser)
         if error:
@@ -54,15 +61,17 @@ class TestCrawlCommand:
         ],
     )
     def test_validate_args(self, args, error):
+        """test_validate_args
+        """
         parser = ArgumentParser()
-        c = CrawlCommand()
-        c.add_args(parser)
+        command = CrawlCommand()
+        command.add_args(parser)
         parsed_args = parser.parse_args(args)
         if error:
             with pytest.raises(Exception):
-                c.validate_args(parsed_args)
+                command.validate_args(parsed_args)
         else:
-            assert c.validate_args(parsed_args) != ""
+            assert command.validate_args(parsed_args) != ""
 
     # TODO: Unit test for test_execute
 

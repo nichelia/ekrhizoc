@@ -12,10 +12,14 @@
 
 script_name="$(basename -- "$0")"
 
-# Formats
+# Colour Formats
+# shellcheck disable=SC2034
 bold="\033[1m"
+# shellcheck disable=SC2034
 green="\033[0;32m"
+# shellcheck disable=SC2034
 red="\033[91m"
+# shellcheck disable=SC2034
 no_color="\033[0m"
 
 usage()
@@ -28,7 +32,6 @@ usage()
     echo "    " "  --help, -h              Show this help message and exit."
 }
 
-arg_count=0
 activate=false
 update=false
 missing_environment=false
@@ -47,7 +50,7 @@ while [[ $# -gt 0 ]]; do
             exit 0
             ;;
         *)
-            >&2 echo "$tag" "error: '$1' not a recognized argument/option"
+            >&2 echo "error: '$1' not a recognized argument/option"
             >&2 usage
             exit 1
             ;;
@@ -70,7 +73,7 @@ if [[ ! ${conda_setup_file} ]]; then
 fi
 
 # Read the conda environment name from the conda environment yml
-conda_env_name=$(cat ${conda_setup_file} | grep "^name:" --color=never | cut -d " " -f2)
+conda_env_name=$(< "${conda_setup_file}" grep "^name:" --color=never | cut -d " " -f2)
 
 # Read Operating System name
 operating_system=$(uname -s)
@@ -82,9 +85,10 @@ elif [[ ${operating_system} == "Linux" ]]; then
 fi
 
 # Get conda commands
+# shellcheck source=/dev/null
 source "${script_dir}/conda-binary.sh"
 
-if [[ $(conda env list | grep -w ${conda_env_name} | wc -l) -eq 0 ]]; then
+if [[ $(conda env list | grep -cw "${conda_env_name}") -eq 0 ]]; then
     echo -e "${green}No existing \"${conda_env_name}\" conda environment found...${no_color}"
     missing_environment=true
 fi
@@ -98,12 +102,12 @@ if [[ ( ${activate} = false && ${update} = false ) || ( ${missing_environment} =
     echo -e "${green}Creating \"${conda_env_name}\" environment...${no_color}"
     if [[ -f "${extra_conda_file}" ]]; then
           echo -e "${green}Creating with ${extra_conda_file} ...${no_color}"
-          conda env create -f ${extra_conda_file} --force
+          conda env create -f "${extra_conda_file}" --force
     else
-      conda create --name ${conda_env_name} --yes --force
+      conda create --name "${conda_env_name}" --yes --force
     fi
     echo -e "${green}Updating \"${conda_env_name}\" environment from ${conda_setup_file}...${no_color}"
-    conda env update -f ${conda_setup_file}
+    conda env update -f "${conda_setup_file}"
 fi
 # Update the existing environment
 if [[ ${update} = true ]]; then
@@ -112,8 +116,8 @@ if [[ ${update} = true ]]; then
         conda env update -f ${extra_conda_file}
     fi
     echo -e "${green}Updating \"${conda_env_name}\" environment from ${conda_setup_file}...${no_color}"
-    conda env update -f ${conda_setup_file}
+    conda env update -f "${conda_setup_file}"
 fi
 
 echo -e "${green}Activating \"${conda_env_name}\" conda environment...${no_color}"
-conda activate ${conda_env_name}
+conda activate "${conda_env_name}"

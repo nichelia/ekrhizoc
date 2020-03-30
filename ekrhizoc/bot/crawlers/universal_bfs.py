@@ -19,7 +19,7 @@ from bs4 import BeautifulSoup
 
 from ekrhizoc.bot.base_crawler import BaseCrawler
 from ekrhizoc.bot.helpers import url_utils
-from ekrhizoc.logging import logger
+from ekrhizoc.logger import LOGGER
 from ekrhizoc.settings import BIN_DIR, MAX_URLS, URL_REQUEST_TIMER
 
 
@@ -28,10 +28,11 @@ class UniversalBfsCrawler(BaseCrawler):
     Initialise crawler bot.
     """
 
-    def __init__(self, seeds: List = [], output: str = ""):
+    def __init__(self, seeds: List = None, output: str = ""):
         super(UniversalBfsCrawler, self).__init__()
         self.name = "universal-bfs"
-        self.seeds = seeds
+        if seeds:
+            self.seeds = seeds
         self.visited_urls = set()
         self.to_visit_urls = queue.Queue()
         self.output = output
@@ -55,8 +56,8 @@ class UniversalBfsCrawler(BaseCrawler):
                 if response.status == HTTPStatus.OK.value:
                     return await response.read()
                 return None
-        except Exception as e:
-            logger.error(e)
+        except Exception as error:
+            LOGGER.error(error)
             return None
 
     async def _scrape_links(self, raw_html: bytes = b"") -> List:
@@ -88,24 +89,24 @@ class UniversalBfsCrawler(BaseCrawler):
             * URL is not restricted by the robots.txt file
         """
         if not url:
-            logger.debug("Invalid url: skipping...")
+            LOGGER.debug("Invalid url: skipping...")
             return False
 
         if url in self.visited_urls:
-            logger.debug(f"Visited already: skipping url {url}")
+            LOGGER.debug(f"Visited already: skipping url {url}")
             return False
 
         _, file_type = os.path.splitext(url)
         if file_type in self.ignore_filetypes:
-            logger.debug(f"Ignore url with file type: {file_type} (full url: {url})")
+            LOGGER.debug(f"Ignore url with file type: {file_type} (full url: {url})")
             return False
 
         if domain and not url_utils.is_same_subdomain(url, domain):
-            logger.debug(f"Different domain: skipping url {url}")
+            LOGGER.debug(f"Different domain: skipping url {url}")
             return False
 
         if domain and url_utils.is_robots_restricted(url):
-            logger.debug(f"Restricted by robots.txt: skipping url {url}")
+            LOGGER.debug(f"Restricted by robots.txt: skipping url {url}")
             return False
 
         return True
@@ -121,18 +122,18 @@ class UniversalBfsCrawler(BaseCrawler):
         if not valid_url:
             return
 
-        logger.info(f"Fetching {url}")
+        LOGGER.info(f"Fetching {url}")
 
         page_content = await self._fetch_page(session, url)
         if not page_content:
-            logger.debug(f"No content found for {url}")
+            LOGGER.debug(f"No content found for {url}")
             return
 
         self.visited_urls.add(url)
 
         links = await self._scrape_links(page_content)
         if not links:
-            logger.debug(f"No links found for {url}")
+            LOGGER.debug(f"No links found for {url}")
             return
 
         for domain in self.domains:
@@ -154,15 +155,15 @@ class UniversalBfsCrawler(BaseCrawler):
         """
         tasks = []
         for seed in self.seeds:
-            logger.debug(f"Add seed {seed}")
+            LOGGER.debug(f"Add seed {seed}")
             self.to_visit_urls.put(seed)
             self._graph.add_node(seed)
 
-        logger.debug("Start async requests...")
+        LOGGER.debug("Start async requests...")
         async with aiohttp.ClientSession() as session:
             while not self.to_visit_urls.empty() and len(self.visited_urls) < ~MAX_URLS:
                 if len(self.to_visit_urls.queue) % 100 == 0:
-                    logger.debug(f"Queued urls: {len(self.to_visit_urls.queue)}")
+                    LOGGER.debug(f"Queued urls: {len(self.to_visit_urls.queue)}")
                 url = self.to_visit_urls.get()
                 task = asyncio.ensure_future(self._fetch_links(session, url))
                 tasks.append(task)
@@ -178,21 +179,22 @@ class UniversalBfsCrawler(BaseCrawler):
         future = asyncio.ensure_future(self._crawl())
         loop.run_until_complete(future)
         loop.close()
-        logger.debug(
-            f"Unfetched (queued) urls ({len(self.to_visit_urls.queue)}): {list(self.to_visit_urls.queue)}"
+        LOGGER.debug(
+            f"Unfetched (queued) urls "
+            f"({len(self.to_visit_urls.queue)}): {list(self.to_visit_urls.queue)}"
         )
-        logger.debug(f"Fetched urls: {list(self.visited_urls)}")
-        logger.info(f"URL pages fetched: {len(self.visited_urls)}")
+        LOGGER.debug(f"Fetched urls: {list(self.visited_urls)}")
+        LOGGER.info(f"URL pages fetched: {len(self.visited_urls)}")
 
     def write_output(self):
         """Write the structure of a graph to the output file as yaml."""
         filepath = Path(~BIN_DIR) / (self.output + ".yaml")
         nx.write_yaml(self._graph, filepath)
-        logger.info(f"Graph structure output can be found here: {filepath}")
+        LOGGER.info(f"Graph structure output can be found here: {filepath}")
 
     def draw_output(self):
         """Write the graph image of a graph to the output file as png."""
         filepath = Path(~BIN_DIR) / (self.output + ".png")
         nx.draw(self._graph)
         plt.savefig(filepath)
-        logger.info(f"Graph image output can be found here: {filepath}")
+        LOGGER.info(f"Graph image output can be found here: {filepath}")

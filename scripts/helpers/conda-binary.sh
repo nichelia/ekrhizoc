@@ -8,12 +8,17 @@
 #
 ###############################################################################
 
+# shellcheck disable=SC2034
 script_name="$(basename -- "$0")"
 
-# Formats
+# Colour Formats
+# shellcheck disable=SC2034
 bold="\033[1m"
+# shellcheck disable=SC2034
 green="\033[0;32m"
+# shellcheck disable=SC2034
 red="\033[91m"
+# shellcheck disable=SC2034
 no_color="\033[0m"
 
 echo -e "${green}Sourcing conda commands...${no_color}"
@@ -21,6 +26,7 @@ echo -e "${green}Sourcing conda commands...${no_color}"
 if [[ $CONDA_BIN ]]; then
     conda_bin_dir=$CONDA_BIN
 else
+    # shellcheck disable=SC2230
     conda_bin_dir=$(which conda | sed "s|/conda$||")
 fi
 
@@ -31,4 +37,5 @@ if [[ ! ${conda_bin_dir} ]]; then
     exit 1
 fi
 
+# shellcheck source=/dev/null
 source "${conda_bin_dir}/../etc/profile.d/conda.sh"

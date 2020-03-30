@@ -1,21 +1,23 @@
+"""Main
+"""
 from argparse import ArgumentParser, Namespace
 from pathlib import Path
 from typing import Callable, Dict
 
 from ekrhizoc import settings
 from ekrhizoc.cli.base_command import BaseCommand
-from ekrhizoc.cli.commands import commands
-from ekrhizoc.logging import logger, setup_logger
+from ekrhizoc.cli.commands import COMMANDS
+from ekrhizoc.logger import LOGGER, setup_logger
 
 
-def main() -> None:
+def main():
     """Entry point to CLI.
 
     Sets up logger, output directory,
     registers `ekrhizoc` command along with
     all the available CLI command modules as subcommands.
     """
-    instantiated_commands = [C() for C in commands]
+    instantiated_commands = [C() for C in COMMANDS]
     subcommands_map = {command.name: command for command in instantiated_commands}
 
     parser = configure_parser(subcommands_map)
@@ -36,14 +38,14 @@ def main() -> None:
 
 def run(command: BaseCommand, args: Namespace) -> Callable:
     """Entry point of a command."""
-    logger.debug(f"Run CLI command {command.name}")
+    LOGGER.debug(f"Run CLI command {command.name}")
     all_settings = [getattr(settings, s) for s in settings.__dict__]
     app_settings = list(
-        filter(lambda o: type(o) == settings.EkrhizocSetting, all_settings)
+        filter(lambda o: isinstance(o, settings.EkrhizocSetting), all_settings)
     )
-    logger.debug("Settings:")
+    LOGGER.debug("Settings:")
     for setting in app_settings:
-        logger.debug(f'"{setting.name}": {setting.value}')
+        LOGGER.debug(f'"{setting.name}": {setting.value}')
 
     self_cleaning_class = getattr(command, "self_cleaning", False)
     try:
@@ -51,8 +53,8 @@ def run(command: BaseCommand, args: Namespace) -> Callable:
             with command as com:
                 return com.run(args)
         return command.run(args)
-    except SystemError as e:
-        logger.critical(e)
+    except SystemError as error:
+        LOGGER.critical(error)
 
 
 def configure_parser(subcommands_map: Dict[str, BaseCommand]) -> ArgumentParser:

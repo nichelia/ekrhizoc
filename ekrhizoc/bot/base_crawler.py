@@ -1,3 +1,5 @@
+"""base_crawler
+"""
 import time
 from typing import Any, List, Set
 
@@ -6,6 +8,9 @@ from ekrhizoc.settings import IGNORE_FILETYPES
 
 
 class BaseCrawler:
+    """BaseCrawler
+    """
+
     def __init__(self):
         self._name = ""
         self._seeds = []
@@ -40,7 +45,7 @@ class BaseCrawler:
     @property
     def seeds(self) -> List:
         """Getter for seeds attribute.
-        
+
         Returns:
             The list of the seeds attribute.
         """
@@ -67,7 +72,7 @@ class BaseCrawler:
     @property
     def domains(self) -> List:
         """Getter for domains attribute.
-        
+
         Returns:
             The list of the domains attribute.
         """
@@ -76,7 +81,7 @@ class BaseCrawler:
     @property
     def ignore_filetypes(self) -> Set:
         """Getter for ignore filetypes attribute.
-        
+
         Returns:
             The set of the ignore filetypes attribute.
         """
@@ -85,7 +90,7 @@ class BaseCrawler:
     @property
     def visited_urls(self) -> Set:
         """Getter for visited urls attribute.
-        
+
         Returns:
             The set of the visited urls attribute.
         """
@@ -103,7 +108,7 @@ class BaseCrawler:
     @property
     def to_visit_urls(self) -> Any:
         """Getter for urls to visit attribute.
-        
+
         Returns:
             The urls to visit attribute (open to Any type).
         """
@@ -152,7 +157,7 @@ class BaseCrawler:
 
         Raises:
             NotImplementedError: If this method is used but not
-                defined in the subcommand class. 
+                defined in the subcommand class.
         """
         raise NotImplementedError(
             f"Private Method: _fetch_page is undefined for crawler {self.name}"
@@ -169,7 +174,7 @@ class BaseCrawler:
 
         Raises:
             NotImplementedError: If this method is used but not
-                defined in the subcommand class. 
+                defined in the subcommand class.
         """
         raise NotImplementedError(
             f"Private Method: _parse_page is undefined for crawler {self.name}"
@@ -184,7 +189,7 @@ class BaseCrawler:
 
         Raises:
             NotImplementedError: If this method is used but not
-                defined in the subcommand class. 
+                defined in the subcommand class.
         """
         raise NotImplementedError(
             f"Private Method: _fetch_links is undefined for crawler {self.name}"
@@ -195,6 +200,6 @@ class BaseCrawler:
 
         Raises:
             NotImplementedError: If this method is used but not
-                defined in the subcommand class. 
+                defined in the subcommand class.
         """
         raise NotImplementedError(f"Method: crawl is undefined for crawler {self.name}")

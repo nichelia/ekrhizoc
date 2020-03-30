@@ -12,7 +12,7 @@ from timeit import default_timer
 from ekrhizoc.bot.crawlers import UniversalBfsCrawler
 from ekrhizoc.bot.helpers import url_utils
 from ekrhizoc.cli.base_command import BaseCommand
-from ekrhizoc.logging import logger
+from ekrhizoc.logger import LOGGER
 
 
 class CrawlCommand(BaseCommand):
@@ -57,7 +57,7 @@ class CrawlCommand(BaseCommand):
         start_time = default_timer()
         self.crawl(args.seed, args.filename)
         elapsed_time = default_timer() - start_time
-        logger.debug(f'Command "{self.name}" took {elapsed_time:.2f} seconds.')
+        LOGGER.debug(f'Command "{self.name}" took {elapsed_time:.2f} seconds.')
 
     def crawl(self, seed: str = "", filename: str = "") -> None:
         """Calls the crawl bot with the provided seed url.
@@ -69,7 +69,7 @@ class CrawlCommand(BaseCommand):
             filename: The file name for the output of the command.
         """
         crawler = UniversalBfsCrawler(seeds=[seed], output=filename)
-        logger.debug(f'Use "{crawler.name}" crawler with seed urls: "{seed}"')
+        LOGGER.debug(f'Use "{crawler.name}" crawler with seed urls: "{seed}"')
         crawler.crawl()
         crawler.write_output()
         crawler.draw_output()

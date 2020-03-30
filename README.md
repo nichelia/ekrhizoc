@@ -178,4 +178,3 @@ This image is published publicly on [docker hub](https://hub.docker.com/reposito
 This command mounts the application's bin (outcome) to user's root directory under ekrhizoc_bin folder.
 
 where version is the published application version (e.g. 0.1.0)
-

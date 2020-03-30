@@ -4,6 +4,8 @@ channels:
   - conda-forge
 dependencies:
   - python>=3.7                 # PSF
-  - pip==18.1                   # MIT
-  - poetry==1.0                 # MIT
-  - conda-pack                  # BSD
+  - pip=20.0                    # MIT
+  - poetry=1.0.0                # MIT
+  - pre-commit=2.2              # MIT
+  - shellcheck=0.7.0            # GPL-3.0
+  - conda-pack=0.4.0            # BSD
