@@ -1,25 +1,33 @@
+"""url_utils_test
+"""
 import pytest
 
 from ekrhizoc.bot.helpers import url_utils
 
 
 def test_canonicalise_url(canonical_urls):
+    """test_canonicalise_url
+    """
     for uncanonical, canonical in canonical_urls.items():
         parsed_url = url_utils._canonicalise_url(uncanonical)
         assert parsed_url == canonical
 
 
 def test_is_valid_url(valid_urls, invalid_urls):
+    """test_is_valid_url
+    """
     for value in valid_urls:
-        assert url_utils._is_valid_url(value) == True
+        assert url_utils._is_valid_url(value)
     for value in invalid_urls:
-        assert url_utils._is_valid_url(value) == False
+        assert not url_utils._is_valid_url(value)
 
 
 # TODO: Unit test for test_get_robots_file_parser
 
 
 def test_get_url_domain(url_data):
+    """test_get_url_domain
+    """
     for value in url_data:
         url = value.get("href", "")
         host = value.get("hostname", "")
@@ -50,6 +58,8 @@ def test_get_url_domain(url_data):
     ],
 )
 def is_same_subdomain(url1, url2, same_subdomain):
+    """is_same_subdomain
+    """
     assert url_utils.is_same_subdomain(url1, url2) == same_subdomain
 
 

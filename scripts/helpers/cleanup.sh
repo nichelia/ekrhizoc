@@ -25,8 +25,10 @@ script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 remove_custom_git_hooks()
 {
   # shellcheck source=/dev/null
+  # shellcheck disable=SC2034
   activated_environment=$(source "${script_dir}/conda-create-env.sh" -a >/dev/null 2>&1)
-  if [[ "$activated_environment" -ne 0 ]]; then
+  status=$?
+  if [[ status -ne 0 ]]; then
     :
   else
     echo -e "${green}Removing custom git hooks...${no_color}"

@@ -1,7 +1,6 @@
 """logging
 """
 import logging
-from datetime import datetime
 from pathlib import Path
 
 from ekrhizoc.settings import LOG_DIR, LOG_LEVEL

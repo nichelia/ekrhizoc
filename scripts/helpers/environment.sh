@@ -83,8 +83,10 @@ fi
 # Try and activate conda environment first.
 # If fails, then create environment.
 # shellcheck source=/dev/null
+# shellcheck disable=SC2034
 activated_environment=$(source "${script_dir}/conda-create-env.sh" -a >/dev/null 2>&1)
-if [[ "$activated_environment" -ne 0 ]]; then
+status=$?
+if [[ status -ne 0 ]]; then
   setup_environment
   setup_precommits
 else
