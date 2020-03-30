@@ -33,7 +33,7 @@ pylint = "^2.4.4"            # GPLv2, but only used as a tool
 pytest = "^5.3"              # MIT
 pytest-cov = "^2.8"          # MIT
 pytest-env = "^0.6.2"        # MIT
-codecov = "^2.0.16"          # Apache2
+codecov = "^2.0.22"          # Apache2
 
 [tool.poetry.scripts]
 ekrhizoc = "ekrhizoc.cli.__main__:main"

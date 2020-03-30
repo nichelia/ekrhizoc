@@ -231,7 +231,7 @@ description = "Hosted coverage reports for GitHub, Bitbucket and Gitlab"
 name = "codecov"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "2.0.16"
+version = "2.0.22"
 
 [package.dependencies]
 coverage = "*"
@@ -956,7 +956,7 @@ multidict = ">=4.0"
 [[package]]
 category = "main"
 description = "Backport of pathlib-compatible object wrapper for zip files"
-marker = "python_version >= \"3.5\" and python_version < \"3.8\" or python_version < \"3.8\""
+marker = "python_version >= \"3.5\" and python_version < \"3.8\" or python_version < \"3.8\" or python_version >= \"3.5\" and python_version < \"3.8\" and (python_version >= \"3.5\" and python_version < \"3.8\" or python_version < \"3.8\")"
 name = "zipp"
 optional = false
 python-versions = ">=3.6"
@@ -967,8 +967,8 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "77f81c95e2e352aed4ee44d3a3b8d3a0ebc42f3cfc4fe3840c29124156dda84f"
-python-versions = "^3.7"              # PSF
+content-hash = "86700232ddcc094515472d0cd6df1cb4285cf2a53531c9c7a4f2bc0c8b3b3e10"
+python-versions = "^3.7"
 
 [metadata.files]
 aiodns = [
@@ -1087,8 +1087,8 @@ clikit = [
     {file = "clikit-0.4.2.tar.gz", hash = "sha256:f67336462800078e0896cf6ecfa3b460dfea4dfa01de659388a4ff0d83c8d6ca"},
 ]
 codecov = [
-    {file = "codecov-2.0.16-py2.py3-none-any.whl", hash = "sha256:38b32934e759a29313382287f59986f25613708f60760c88d31e956399bbeffe"},
-    {file = "codecov-2.0.16.tar.gz", hash = "sha256:4cf93c30cc1ddb6d7414fce0a45816889499c3febc8bbbc24f1cd1936a804087"},
+    {file = "codecov-2.0.22-py2.py3-none-any.whl", hash = "sha256:09fb045eb044a619cd2b9dacd7789ae8e322cb7f18196378579fd8d883e6b665"},
+    {file = "codecov-2.0.22.tar.gz", hash = "sha256:aeeefa3a03cac8a78e4f988e935b51a4689bb1f17f20d4e827807ee11135f845"},
 ]
 colorama = [
     {file = "colorama-0.4.3-py2.py3-none-any.whl", hash = "sha256:7d73d2a99753107a36ac6b455ee49046802e59d9d076ef8e47b61499fa29afff"},
