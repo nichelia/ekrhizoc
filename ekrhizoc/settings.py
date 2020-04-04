@@ -1,8 +1,13 @@
+"""settings
+"""
 from os import getenv
 from typing import Any
 
 
 class EkrhizocSetting:
+    """EkrhizocSetting
+    """
+
     def __init__(
         self,
         field: str,
@@ -102,7 +107,7 @@ URL_REQUEST_TIMER = EkrhizocSetting(
     field="url_request_timer",
     datatype=float,
     default_value=0.1,
-    description="Time (in seconds) to wait per request (not to populate server with multiple requests)",
+    description="Time (in seconds) to wait per request",
 )
 
 MAX_URLS = EkrhizocSetting(

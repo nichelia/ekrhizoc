@@ -16,13 +16,6 @@ env-prod:
 env-update:
 	./scripts/helpers/environment.sh -f
 
-### Git ###
-.PHONY: git-hooks
-git-hooks:
-	chmod +x githooks/*
-	mkdir -p .git/hooks
-	cd .git/hooks && ln -sf ../../githooks/* .
-
 ### PIP ###
 .PHONY: build-package
 build-package:
@@ -54,6 +47,4 @@ test-coverage:
 ### Util ###
 .PHONY : clean
 clean :
-	./scripts/helpers/conda-remove-env.sh
-	rm -rf bin dist .pytest_cache .coverage *.egg-info *.log
-	find . -path "*/__pycache__" -type d -exec rm -r {} ';'
+	./scripts/helpers/cleanup.sh

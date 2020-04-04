@@ -1,11 +1,12 @@
+"""logging
+"""
 import logging
-from datetime import datetime
 from pathlib import Path
 
 from ekrhizoc.settings import LOG_DIR, LOG_LEVEL
 
-logger = logging.getLogger(__name__)
-logger_format = (
+LOGGER = logging.getLogger(__name__)
+LOGGER_FORMAT = (
     "%(asctime)s - %(name)s - %(levelname)s - %(message)s (%(filename)s:%(lineno)d)"
 )
 
@@ -18,7 +19,7 @@ class CustomFormatter(logging.Formatter):
     red = "\x1b[31;21m"
     bold_red = "\x1b[31;1m"
     reset = "\x1b[0m"
-    format = logger_format
+    format = LOGGER_FORMAT
 
     FORMATS = {
         logging.DEBUG: grey + format + reset,
@@ -51,7 +52,7 @@ def setup_logger(verbosity: int = 0) -> None:
         # Limit verbosity to value 2
         verbosity = min(verbosity, 2)
         log_level = base_loglevel - (verbosity * 10)
-    logger.setLevel(log_level)
+    LOGGER.setLevel(log_level)
 
     # If directory of logs exists, write to file.
     # Otherwise default to stream.
@@ -62,10 +63,10 @@ def setup_logger(verbosity: int = 0) -> None:
             raise NotADirectoryError(f"{output_dir} is not a directory")
         filepath = output_dir / "ekrhizoc.log"
         handler = logging.FileHandler(filepath)
-        handler.setFormatter(logging.Formatter(logger_format))
+        handler.setFormatter(logging.Formatter(LOGGER_FORMAT))
     else:
         handler = logging.StreamHandler()
         handler.setLevel(log_level)
         handler.setFormatter(CustomFormatter())
 
-    logger.addHandler(handler)
+    LOGGER.addHandler(handler)

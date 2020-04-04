@@ -1,3 +1,5 @@
+"""url_utils
+"""
 import re
 from functools import lru_cache
 from urllib.parse import urljoin
@@ -5,7 +7,7 @@ from urllib.parse import urljoin
 import urlcanon
 from reppy.robots import Robots
 
-from ekrhizoc.logging import logger
+from ekrhizoc.logger import LOGGER
 from ekrhizoc.settings import MAX_URL_LENGTH
 
 
@@ -25,8 +27,8 @@ def _canonicalise_url(url: str = "") -> str:
         parsed_url = urlcanon.parse_url(url)
         urlcanon.semantic_precise(parsed_url)
         return str(parsed_url)
-    except Exception as e:
-        logger.error(e)
+    except Exception as error:
+        LOGGER.error(error)
         return ""
 
 
@@ -87,20 +89,20 @@ def _is_valid_url(url: str = "") -> bool:
     )
 
     if url == "":
-        logger.debug("Given url is empty...")
+        LOGGER.debug("Given url is empty...")
         return False
 
     if not pattern.match(url):
-        logger.debug(f"Given url does not match pattern... {url}")
+        LOGGER.debug(f"Given url does not match pattern... {url}")
         return False
 
     if not len(url) < ~MAX_URL_LENGTH:
-        logger.debug(
+        LOGGER.debug(
             f"Given url exceeds maximum length in characters ({~MAX_URL_LENGTH})... {url}"
         )
         return False
 
-    logger.debug(f"Url is valid: {url}")
+    LOGGER.debug(f"Url is valid: {url}")
     return True
 
 
@@ -133,8 +135,8 @@ def get_url_domain(url: str = "") -> str:
     try:
         parsed_url = urlcanon.parse_url(url)
         return (parsed_url.host).decode()
-    except Exception as e:
-        logger.error(e)
+    except Exception as error:
+        LOGGER.error(error)
         return ""
 
 
@@ -177,8 +179,8 @@ def is_same_subdomain(url: str = "", domain: str = "") -> bool:
         parsed_url = urlcanon.parse_url(url)
         normalised_domain = urlcanon.normalize_host(domain)
         return urlcanon.url_matches_domain_exactly(parsed_url, normalised_domain)
-    except Exception as e:
-        logger.error(e)
+    except Exception as error:
+        LOGGER.error(error)
         return False
 
 
