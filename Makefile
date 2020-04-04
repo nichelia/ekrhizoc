@@ -33,7 +33,7 @@ build-docker:
 ### Lint ###
 .PHONY: lint
 lint:
-	pylint $(MODULE)
+	pre-commit run --all-files
 
 ### Test ###
 .PHONY: test
