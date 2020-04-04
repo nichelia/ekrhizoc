@@ -30,6 +30,11 @@ publish-package:
 build-docker:
 	./scripts/build_docker_image.sh
 
+### Lint ###
+.PHONY: lint
+lint:
+	pre-commit run --all-files
+
 ### Test ###
 .PHONY: test
 test:
