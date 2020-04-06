@@ -46,7 +46,7 @@ test:
 
 .PHONY: test-coverage
 test-coverage:
-	pytest --cov=. --cov-report=term-missing
+	pytest --cov=. --cov-report=xml
 
 ### Util ###
 .PHONY : clean

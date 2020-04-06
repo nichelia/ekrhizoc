@@ -42,7 +42,7 @@ remove_python_temp_files()
 {
   echo -e "${green}Removing python temp files...${no_color}"
   # Remove eny python unnecessary files
-  rm -rf -- bin dist .pytest_cache .coverage *.egg-info *.log
+  rm -rf -- bin dist .pytest_cache .coverage *.egg-info *.log coverage.xml
   find . -path "*/__pycache__" -type d -exec rm -r {} ';'
 }
 

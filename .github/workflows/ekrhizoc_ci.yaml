@@ -1,4 +1,4 @@
-name: e6c CI
+name: e6c CI/CD
 
 on:
   push:
@@ -27,8 +27,11 @@ jobs:
         with:
           path: /github/workspace/3/envs/
           key: environment-${{ runner.os }}-${{ hashFiles('conda_setup.yml') }}-${{ hashFiles('pyproject.toml') }}-${{ hashFiles('poetry.lock') }}
-          restore-keys: |
-            environment-${{ runner.os }}-
+      - name: Cache pre-commits
+        uses: actions/cache@v1
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ runner.os }}-${{ hashFiles('conda_setup.yml') }}-${{ hashFiles('.pre-commit-config.yaml') }}
       - name: Configure environment
         shell: bash -l {0}
         run: ./scripts/helpers/environment.sh -f
@@ -55,21 +58,28 @@ jobs:
         with:
           path: /github/workspace/3/envs/
           key: environment-${{ runner.os }}-${{ hashFiles('conda_setup.yml') }}-${{ hashFiles('pyproject.toml') }}-${{ hashFiles('poetry.lock') }}
-          restore-keys: |
-            environment-${{ runner.os }}-
+      - name: Cache pre-commits
+        uses: actions/cache@v1
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ runner.os }}-${{ hashFiles('conda_setup.yml') }}-${{ hashFiles('.pre-commit-config.yaml') }}
       - name: Configure environment
         shell: bash -l {0}
         run: ./scripts/helpers/environment.sh -f
       - name: Test
         shell: bash -l {0}
         run: make test
-      - name: Test Coverage
+      - name: Test coverage
         shell: bash -l {0}
         run: make test-coverage
-      - uses: codecov/codecov-action@v1
+      - name: Upload coverage report to CodeCov
+        uses: codecov/codecov-action@v1
 
   security-scan:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
     steps:
       - name: Checkout e6c repo
         uses: actions/checkout@v2
@@ -84,20 +94,23 @@ jobs:
         with:
           path: /github/workspace/3/envs/
           key: environment-${{ runner.os }}-${{ hashFiles('conda_setup.yml') }}-${{ hashFiles('pyproject.toml') }}-${{ hashFiles('poetry.lock') }}
-          restore-keys: |
-            environment-${{ runner.os }}-
+      - name: Cache pre-commits
+        uses: actions/cache@v1
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ runner.os }}-${{ hashFiles('conda_setup.yml') }}-${{ hashFiles('.pre-commit-config.yaml') }}
       - name: Configure environment
         shell: bash -l {0}
         run: ./scripts/helpers/environment.sh -f
       - name: Build Docker test image
         shell: bash -l {0}
         run: make build-docker-local
-      - name: Run security scan on test image
+      - name: Run security scan on Docker test image
         uses: anchore/scan-action@master
         with:
           image-reference: "test/image:latest"
           dockerfile-path: "./deployment/docker/test.dockerfile"
           fail-build: true
           include-app-packages: true
-      - name: anchore inline scan JSON results
+      - name: Scan JSON results
         run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
