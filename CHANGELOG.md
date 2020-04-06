@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Reconfigure CI with Github Actions (includes: lint, test, security scan)
+- Support for pre-commit
 - GitHub issue templates for Bug report and Feature request
 - Badges for the project in README
 - Setup CI with Travis
