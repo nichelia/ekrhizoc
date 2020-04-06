@@ -7,7 +7,7 @@
 [![code coverage](https://badgen.net/codecov/c/github/nichelia/ekrhizoc?label=code%20coverage)](https://codecov.io/gh/nichelia/ekrhizoc)
 [![code alerts](https://badgen.net/lgtm/alerts/g/nichelia/ekrhizoc?label=code%20alerts)](https://lgtm.com/projects/g/nichelia/ekrhizoc/alerts/)
 [![code quality](https://badgen.net/lgtm/grade/g/nichelia/ekrhizoc?label=code%20quality)](https://lgtm.com/projects/g/nichelia/ekrhizoc/context:python)
-[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen)](https://github.com/pre-commit/pre-commit)
 [![code style](https://badgen.net/badge/code%20style/black/color=black)](https://github.com/ambv/black)
 
 # ekrhizoc
