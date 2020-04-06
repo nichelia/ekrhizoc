@@ -26,6 +26,10 @@ publish-package:
 	poetry publish
 
 ### Docker ###
+.PHONY: build-docker-local
+build-docker-local:
+	./scripts/build_docker_image.sh -t
+
 .PHONY: build-docker
 build-docker:
 	./scripts/build_docker_image.sh
