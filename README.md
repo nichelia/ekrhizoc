@@ -83,9 +83,7 @@ Behaviour of the application can be configured via Environment Variables.
 
 * Clone [repo](https://github.com/nichelia/ekrhizoc) on your local machine
 * Install [`conda`](https://www.anaconda.com) or [`miniconda`](https://docs.conda.io/en/latest/miniconda.html)
-* Create symlink for githooks (based on [`isort`](https://github.com/timothycrosley/isort), [`black`](https://github.com/psf/black)):  
-`$ make git-hooks`
-* Create your local project environment (based on [`conda`](https://www.anaconda.com), [`poetry`](https://python-poetry.org)):  
+* Create your local project environment (based on [`conda`](https://www.anaconda.com), [`poetry`](https://python-poetry.org), [`pre-commit`](https://pre-commit.com)):  
 `$ make env`
 * (Optional) Update existing local project environment:  
 `$ make env-update`
@@ -104,6 +102,7 @@ On a terminal, run the following (execute on project's root directory):
 [ Not Available ]
 
 ## Testing
+(part of CI/CD)
 
 [ Work in progress... ]
 

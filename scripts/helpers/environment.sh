@@ -63,14 +63,17 @@ setup_environment()
   source "${script_dir}/poetry_setup.sh"
 
   if [[ ${prod} = true ]]; then
+    echo -e "\n${green}Setting up poetry prod dependencies...${no_color}"
     poetry install --no-dev
   else
+    echo -e "\n${green}Setting up poetry dependencies...${no_color}"
     poetry install
   fi
 }
 
 setup_precommits()
 {
+  echo -e "\n${green}Setting up pre-commit hooks...${no_color}"
   pre-commit install
 }
 
