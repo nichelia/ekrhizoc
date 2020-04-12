@@ -51,43 +51,46 @@ jobs:
             exit 1
           fi
 
-  package:
-    needs: [version-check]
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-      - name: Install miniconda
-        uses: goanpeca/setup-miniconda@v1
-        with:
-          miniconda-version: 'latest'
-          activate-environment: ekrhizoc
-      - name: Cache environment
-        id: cache-environment
-        uses: actions/cache@v1
-        with:
-          path: /github/workspace/3/envs/
-          key: environment-${{ runner.os }}-${{ hashFiles('conda_setup.yml') }}-${{ hashFiles('pyproject.toml') }}-${{ hashFiles('poetry.lock') }}
-      - name: Cache pre-commits
-        uses: actions/cache@v1
-        with:
-          path: ~/.cache/pre-commit
-          key: pre-commit-${{ runner.os }}-${{ hashFiles('conda_setup.yml') }}-${{ hashFiles('.pre-commit-config.yaml') }}
-      - name: Configure environment
-        shell: bash -l {0}
-        run: ./scripts/helpers/environment.sh -f
-      - name: Build
-        shell: bash -l {0}
-        run: make build-package
-      - name: Publish
-        shell: bash -l {0}
-        run: poetry publish -u ${{ secrets.PYPI_USERNAME }} -p ${{ secrets.PYPI_PASSWORD }}
+  # package:
+  #   needs: [version-check]
+  #   runs-on: ${{ matrix.os }}
+  #   strategy:
+  #     matrix:
+  #       os: [ubuntu-latest]
+  #   steps:
+  #     - name: Checkout repo
+  #       uses: actions/checkout@v2
+  #     - name: Install miniconda
+  #       uses: goanpeca/setup-miniconda@v1
+  #       with:
+  #         miniconda-version: 'latest'
+  #         activate-environment: ekrhizoc
+  #     - name: Cache environment
+  #       id: cache-environment
+  #       uses: actions/cache@v1
+  #       with:
+  #         path: /github/workspace/3/envs/
+  #         key: environment-${{ runner.os }}-${{ hashFiles('conda_setup.yml') }}-${{ hashFiles('pyproject.toml') }}-${{ hashFiles('poetry.lock') }}
+  #     - name: Cache pre-commits
+  #       uses: actions/cache@v1
+  #       with:
+  #         path: ~/.cache/pre-commit
+  #         key: pre-commit-${{ runner.os }}-${{ hashFiles('conda_setup.yml') }}-${{ hashFiles('.pre-commit-config.yaml') }}
+  #     - name: Configure environment
+  #       shell: bash -l {0}
+  #       run: ./scripts/helpers/environment.sh -f
+  #     - name: Build
+  #       shell: bash -l {0}
+  #       run: make build-package
+  #     - name: Publish
+  #       shell: bash -l {0}
+  #       run: poetry publish -u ${{ secrets.PYPI_USERNAME }} -p ${{ secrets.PYPI_PASSWORD }}
+  #     - name: Wait for publish
+  #       shell: bash -l {0}
+  #       run: sleep 3m
 
   publish:
-    needs: [version-check, package]
+    needs: [version-check]
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -112,7 +115,7 @@ jobs:
           dockerfile: ekrhizoc.dockerfile
 
   release:
-    needs: [version-check, package, publish]
+    needs: [version-check, publish]
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -131,5 +134,8 @@ jobs:
         with:
           tag_name: ${{ steps.tag_value.outputs.VERSION }}
           release_name: v${{ steps.tag_value.outputs.VERSION }}
+          body: |
+            * [PyPi package](https://pypi.org/project/ekrhizoc/)
+            * [Docker image](https://hub.docker.com/repository/docker/nichelia/ekrhizoc/general)
           draft: false
           prerelease: false
