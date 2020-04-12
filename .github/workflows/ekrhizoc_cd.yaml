@@ -84,7 +84,7 @@ jobs:
         run: make build-package
       - name: Publish
         shell: bash -l {0}
-        run: poetry publish -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        run: poetry publish -u ${{ secrets.PYPI_USERNAME }} -p ${{ secrets.PYPI_PASSWORD }}
 
   publish:
     needs: [version-check, package]
