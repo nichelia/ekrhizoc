@@ -84,7 +84,10 @@ jobs:
         run: make build-package
       - name: Publish
         shell: bash -l {0}
-        run: poetry publish -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        run: poetry publish -u ${{ secrets.PYPI_USERNAME }} -p ${{ secrets.PYPI_PASSWORD }}
+      - name: Wait for publish
+        shell: bash -l {0}
+        run: sleep 3m
 
   publish:
     needs: [version-check, package]
@@ -131,5 +134,8 @@ jobs:
         with:
           tag_name: ${{ steps.tag_value.outputs.VERSION }}
           release_name: v${{ steps.tag_value.outputs.VERSION }}
+          body: |
+            * [PyPi package](https://pypi.org/project/ekrhizoc/)
+            * [Docker image](https://hub.docker.com/repository/docker/nichelia/ekrhizoc/general)
           draft: false
           prerelease: false
