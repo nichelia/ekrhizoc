@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.1.1] - 2020-02-25
 ### Added
 - Reconfigure CD with Github Actions (includes: package, publish, release)
 - Reconfigure CI with Github Actions (includes: lint, test, security scan)
@@ -17,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Pre-commit hooks
 - Pylint / shellcheck code fixes
 
-## [0.1.0] - 2020-02-25
+## [0.1.0] - 2020-04-12
 ### Added
 - More debug logging for (in)valid URL
 - Tests for canonical urls
@@ -49,6 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Crawler features: Asynchronous calls, page url scraper, same domain url filter, visited urls filter, file type filtering, url length limits, handle relative urls, respect robots.txt file
 - Output as graph
 
-[Unreleased]: https://github.com/nichelia/ekrhizoc/compare/0.1.0...HEAD
+[Unreleased]: https://github.com/nichelia/ekrhizoc/compare/0.1.1...HEAD
+[0.1.1]: https://github.com/nichelia/ekrhizoc/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/nichelia/ekrhizoc/compare/0.0.5...0.1.0
 [0.0.5]: https://github.com/nichelia/ekrhizoc/releases/tag/0.0.5
