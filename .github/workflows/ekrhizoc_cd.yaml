@@ -112,7 +112,7 @@ jobs:
           buildargs: APP_VERSION
           tags: "${{ steps.tag_value.outputs.VERSION }}"
           workdir: deployment/docker
-          dockerfile: ekrhizoc.dockerfile
+          dockerfile: prod.dockerfile
 
   release:
     needs: [version-check, package, publish]
