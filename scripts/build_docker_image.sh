@@ -59,5 +59,5 @@ else
   version="0.0.1"
   version=$(poetry version | sed 's/[^0-9.]*//g')
   echo -e "${green}Using version ${version}${no_color}"
-  docker build -f ./deployment/docker/ekrhizoc.dockerfile -t nichelia/ekrhizoc:"${version}" --build-arg APP_VERSION="${version}" .
+  docker build -f ./deployment/docker/prod.dockerfile -t nichelia/ekrhizoc:"${version}" --build-arg APP_VERSION="${version}" .
 fi
