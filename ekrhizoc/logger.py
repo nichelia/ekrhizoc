@@ -30,6 +30,7 @@ class CustomFormatter(logging.Formatter):
     }
 
     def format(self, record):
+        # pylint: disable=function-redefined
         log_format = self.FORMATS.get(record.levelno)
         formatter = logging.Formatter(log_format)
         return formatter.format(record)

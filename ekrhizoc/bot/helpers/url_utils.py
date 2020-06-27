@@ -1,6 +1,7 @@
 """url_utils
 """
 import re
+import traceback
 from functools import lru_cache
 from urllib.parse import urljoin
 
@@ -28,7 +29,9 @@ def _canonicalise_url(url: str = "") -> str:
         urlcanon.semantic_precise(parsed_url)
         return str(parsed_url)
     except Exception as error:
-        LOGGER.error(error)
+        track = traceback.format_exc()
+        LOGGER.critical(error)
+        LOGGER.debug(track)
         return ""
 
 
@@ -136,7 +139,9 @@ def get_url_domain(url: str = "") -> str:
         parsed_url = urlcanon.parse_url(url)
         return (parsed_url.host).decode()
     except Exception as error:
-        LOGGER.error(error)
+        track = traceback.format_exc()
+        LOGGER.critical(error)
+        LOGGER.debug(track)
         return ""
 
 
@@ -180,7 +185,9 @@ def is_same_subdomain(url: str = "", domain: str = "") -> bool:
         normalised_domain = urlcanon.normalize_host(domain)
         return urlcanon.url_matches_domain_exactly(parsed_url, normalised_domain)
     except Exception as error:
-        LOGGER.error(error)
+        track = traceback.format_exc()
+        LOGGER.critical(error)
+        LOGGER.debug(track)
         return False
 
 
