@@ -19,7 +19,7 @@ MAINTAINER Nicholas Elia <me@nichelia.com>
 ENV USER="nobody"
 WORKDIR "/tmp"
 
-COPY --chown=${USER}:${USER} --from=compile-image /opt/venv /opt/venv
+COPY --from=compile-image /opt/venv /opt/venv
 
 ENV PATH="/opt/venv/bin:$PATH"
 
