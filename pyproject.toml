@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ekrhizoc"
-version = "0.1.1"
+version = "0.1.2"
 description = "A simple python web crawler"
 license = "MIT"
 authors = ["Nicholas Elia <me@nichelia.com>"]
