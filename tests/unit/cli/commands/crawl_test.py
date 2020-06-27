@@ -73,6 +73,6 @@ class TestCrawlCommand:
         else:
             assert command.validate_args(parsed_args) != ""
 
-    # TODO: Unit test for test_execute
+    # TODO: Unit test for test_execute # pylint: disable=fixme
 
-    # TODO: Unit test for test_crawl
+    # TODO: Unit test for test_crawl # pylint: disable=fixme

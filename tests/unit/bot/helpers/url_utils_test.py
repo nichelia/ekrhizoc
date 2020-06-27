@@ -22,7 +22,7 @@ def test_is_valid_url(valid_urls, invalid_urls):
         assert not url_utils._is_valid_url(value)
 
 
-# TODO: Unit test for test_get_robots_file_parser
+# TODO: Unit test for test_get_robots_file_parser # pylint: disable=fixme
 
 
 def test_get_url_domain(url_data):
@@ -35,7 +35,7 @@ def test_get_url_domain(url_data):
             assert url_utils.get_url_domain(url) == host
 
 
-# TODO: Unit test for test_is_robots_restricted
+# TODO: Unit test for test_is_robots_restricted # pylint: disable=fixme
 
 
 @pytest.mark.parametrize(
@@ -63,4 +63,4 @@ def is_same_subdomain(url1, url2, same_subdomain):
     assert url_utils.is_same_subdomain(url1, url2) == same_subdomain
 
 
-# TODO: Unit test for test_get_full_url
+# TODO: Unit test for test_get_full_url # pylint: disable=fixme

@@ -8,6 +8,7 @@
 import asyncio
 import os
 import queue
+import traceback
 from http import HTTPStatus
 from pathlib import Path
 from typing import Any, List
@@ -57,7 +58,9 @@ class UniversalBfsCrawler(BaseCrawler):
                     return await response.read()
                 return None
         except Exception as error:
-            LOGGER.error(error)
+            track = traceback.format_exc()
+            LOGGER.critical(error)
+            LOGGER.debug(track)
             return None
 
     async def _scrape_links(self, raw_html: bytes = b"") -> List:

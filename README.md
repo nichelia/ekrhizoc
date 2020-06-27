@@ -38,7 +38,7 @@ Also known as __E6c__.
 
 Implementation of a simple python web crawler.  
 Input: URL (seed).  
-Output: simple textual sitemap (to show links between pages).
+Output: Simple textual sitemap (to show links between pages).
 
 ### Requirements
 
@@ -83,7 +83,7 @@ Behaviour of the application can be configured via Environment Variables.
 
 ## Development
 
-### Configure for local development
+### Configure your local development
 
 * Clone [repo](https://github.com/nichelia/ekrhizoc) on your local machine
 * Install [`conda`](https://www.anaconda.com) or [`miniconda`](https://docs.conda.io/en/latest/miniconda.html)
@@ -99,7 +99,7 @@ On a terminal, run the following (execute on project's root directory):
 * Activate project environment:  
 `$ . ./scripts/helpers/environment.sh`
 * Run the CLI using `poetry`:  
-`$ poetry run ekrhizoc`
+`$ ekrhizoc`
 
 ### Contribute
 
@@ -175,9 +175,9 @@ For production, a Docker image is used.
 This image is published publicly on [docker hub](https://hub.docker.com/repository/docker/nichelia/ekrhizoc).
 
 * First pull image from docker hub:  
-`$ docker pull nichelia/ekrhizoc:[version]`
-* First pull image from docker hub:  
-`$ docker run --rm -it -v ~/ekrhizoc_bin:/usr/src/bin nichelia/ekrhizoc:[version]`  
+`$ docker pull nichelia/ekrhizoc:{version}`
+* Execute CLI via docker run:  
+`$ docker run --rm -it -v ~/ekrhizoc_bin:/tmp/bin nichelia/ekrhizoc:{version} {command}`  
 This command mounts the application's bin (outcome) to user's root directory under ekrhizoc_bin folder.
 
-where version is the published application version (e.g. 0.1.0)
+where version is the published application version
